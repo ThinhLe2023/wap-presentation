@@ -28,7 +28,7 @@
                 justify-content: center;
                 gap: 10px;
                 /* background-color: blue; */
-                position: relative;
+                position: absolute;
             }
         </style>
         <script>
@@ -37,23 +37,23 @@
                 this.row = row;
                 this.image = image;
             } 
-            let bg_img = ["/images/bg_white.png", "/images/bg_den.png"];
-            let list_chesses = [new Chesses(0,0, "/images/xe_den_trang.png"), new Chesses(1,0, "/images/ma_den_den.png"),
-                                new Chesses(2,0, "/images/tinh_den_trang.png"), new Chesses(3,0, "/images/hau_den.png"),
-                                new Chesses(4,0, "/images/vua_den.png"), new Chesses(5,0, "/images/tinh_den_den.png"),
-                                new Chesses(6,0, "/images/ma_den_trang.png"), new Chesses(7,0, "/images/xe_den_den.png"),
-                                new Chesses(0,1, "/images/tot_den_den.png"), new Chesses(1,1, "/images/tot_den_trang.png"),
-                                new Chesses(2,1, "/images/tot_den_den.png"), new Chesses(3,1, "/images/tot_den_trang.png"),
-                                new Chesses(4,1, "/images/tot_den_den.png"), new Chesses(5,1, "/images/tot_den_trang.png"),
-                                new Chesses(6,1, "/images/tot_den_den.png"), new Chesses(7,1, "/images/tot_den_trang.png"),
-                                new Chesses(0,6, "/images/tot_trang_trang.png"), new Chesses(1,6, "/images/tot_trang_den.png"),
-                                new Chesses(2,6, "/images/tot_trang_trang.png"), new Chesses(3,6, "/images/tot_trang_den.png"),
-                                new Chesses(4,6, "/images/tot_trang_trang.png"), new Chesses(5,6, "/images/tot_trang_den.png"),
-                                new Chesses(6,6, "/images/tot_trang_trang.png"), new Chesses(7,6, "/images/tot_trang_den.png"),
-                                new Chesses(0,7, "/images/xe_trang_den.png"), new Chesses(1,7, "/images/ma_trang_trang.png"),
-                                new Chesses(2,7, "/images/tinh_trang_den.png"), new Chesses(3,7, "/images/hau_trang.png"),
-                                new Chesses(4,7, "/images/vua_trang.png"), new Chesses(5,7, "/images/tinh_trang_trang.png"),
-                                new Chesses(6,7, "/images/ma_trang_den.png"), new Chesses(7,7, "/images/xe_trang_trang.png")
+            let bg_img = ["./images/bg_white.png", "./images/bg_den.png"];
+            let list_chesses = [new Chesses(0,0, "./images/xe_den_trang.png"), new Chesses(1,0, "./images/ma_den_den.png"),
+                                new Chesses(2,0, "./images/tinh_den_trang.png"), new Chesses(3,0, "./images/hau_den.png"),
+                                new Chesses(4,0, "./images/vua_den.png"), new Chesses(5,0, "./images/tinh_den_den.png"),
+                                new Chesses(6,0, "./images/ma_den_trang.png"), new Chesses(7,0, "./images/xe_den_den.png"),
+                                new Chesses(0,1, "./images/tot_den_den.png"), new Chesses(1,1, "./images/tot_den_trang.png"),
+                                new Chesses(2,1, "./images/tot_den_den.png"), new Chesses(3,1, "./images/tot_den_trang.png"),
+                                new Chesses(4,1, "./images/tot_den_den.png"), new Chesses(5,1, "./images/tot_den_trang.png"),
+                                new Chesses(6,1, "./images/tot_den_den.png"), new Chesses(7,1, "./images/tot_den_trang.png"),
+                                new Chesses(0,6, "./images/tot_trang_trang.png"), new Chesses(1,6, "./images/tot_trang_den.png"),
+                                new Chesses(2,6, "./images/tot_trang_trang.png"), new Chesses(3,6, "./images/tot_trang_den.png"),
+                                new Chesses(4,6, "./images/tot_trang_trang.png"), new Chesses(5,6, "./images/tot_trang_den.png"),
+                                new Chesses(6,6, "./images/tot_trang_trang.png"), new Chesses(7,6, "./images/tot_trang_den.png"),
+                                new Chesses(0,7, "./images/xe_trang_den.png"), new Chesses(1,7, "./images/ma_trang_trang.png"),
+                                new Chesses(2,7, "./images/tinh_trang_den.png"), new Chesses(3,7, "./images/hau_trang.png"),
+                                new Chesses(4,7, "./images/vua_trang.png"), new Chesses(5,7, "./images/tinh_trang_trang.png"),
+                                new Chesses(6,7, "./images/ma_trang_den.png"), new Chesses(7,7, "./images/xe_trang_trang.png")
                             ];
             let rawCol = 8;
             let row = 0;
@@ -100,12 +100,14 @@
             }
 
             function showVS() {
-                let topPos = 0;
-                const maxTop = -400;
+                let topPos = 600;
+                const maxTop = 100;
+                $("#game_start").css('top',"600px");
+                $("#game_start").css('left',"100px");
                 $("#game_start").show();
                 interval = setInterval(() => {
                     topPos -= 20;
-                    if (Math.abs(topPos) >= Math.abs(maxTop)) {
+                    if (topPos <= maxTop) {
                         clearInterval(interval);
                         moveLeftRight();
                     } else {
@@ -114,8 +116,8 @@
                 }, 200);
             }
             function moveLeftRight() {
-                let maxLeft = 20;
-                let left = 0;
+                let maxLeft = 120;
+                let left = 100;
                 let count = 0;
                 interval = setInterval(() => {
                     if (left > maxLeft) {
@@ -152,13 +154,13 @@
            </div>
            <div id="game_start">
             <div>
-                <img style="width: 200px;" src="/images/thinh_card.png"/>
+                <img style="width: 200px;" src="./images/thinh_card.png"/>
             </div>
             <div>
                 <h1 style="font-family: Cursive; color: red; font-size: 100px; top: 10px; position: relative;">VS</h1>
             </div>
             <div>
-                <img style="width: 200px;" src="/images/vien_card.png"/>
+                <img style="width: 200px;" src="./images/vien_card.png"/>
             </div>
             
           </div>
