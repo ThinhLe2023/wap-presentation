@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <style>
+            .cube{
+                display: inline-block;
+                width: 68px;
+                height: 70px;
+            }
+            #containt{
+                display: flex;
+                flex-wrap: wrap;
+                width: 544px;
+                margin: auto;
+            }
+            #containt{
+                
+            }
+            #myDiv{
+                width: 700px;
+                padding: 10px;
+                background-color: gray;
+            }
+            #game_start{
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                gap: 10px;
+                /* background-color: blue; */
+                position: relative;
+            }
+        </style>
+        <script>
+            Chesses = function(col, row, image) {
+                this.col = col;
+                this.row = row;
+                this.image = image;
+            } 
+            let bg_img = ["/images/bg_white.png", "/images/bg_den.png"];
+            let list_chesses = [new Chesses(0,0, "/images/xe_den_trang.png"), new Chesses(1,0, "/images/ma_den_den.png"),
+                                new Chesses(2,0, "/images/tinh_den_trang.png"), new Chesses(3,0, "/images/hau_den.png"),
+                                new Chesses(4,0, "/images/vua_den.png"), new Chesses(5,0, "/images/tinh_den_den.png"),
+                                new Chesses(6,0, "/images/ma_den_trang.png"), new Chesses(7,0, "/images/xe_den_den.png"),
+                                new Chesses(0,1, "/images/tot_den_den.png"), new Chesses(1,1, "/images/tot_den_trang.png"),
+                                new Chesses(2,1, "/images/tot_den_den.png"), new Chesses(3,1, "/images/tot_den_trang.png"),
+                                new Chesses(4,1, "/images/tot_den_den.png"), new Chesses(5,1, "/images/tot_den_trang.png"),
+                                new Chesses(6,1, "/images/tot_den_den.png"), new Chesses(7,1, "/images/tot_den_trang.png"),
+                                new Chesses(0,6, "/images/tot_trang_trang.png"), new Chesses(1,6, "/images/tot_trang_den.png"),
+                                new Chesses(2,6, "/images/tot_trang_trang.png"), new Chesses(3,6, "/images/tot_trang_den.png"),
+                                new Chesses(4,6, "/images/tot_trang_trang.png"), new Chesses(5,6, "/images/tot_trang_den.png"),
+                                new Chesses(6,6, "/images/tot_trang_trang.png"), new Chesses(7,6, "/images/tot_trang_den.png"),
+                                new Chesses(0,7, "/images/xe_trang_den.png"), new Chesses(1,7, "/images/ma_trang_trang.png"),
+                                new Chesses(2,7, "/images/tinh_trang_den.png"), new Chesses(3,7, "/images/hau_trang.png"),
+                                new Chesses(4,7, "/images/vua_trang.png"), new Chesses(5,7, "/images/tinh_trang_trang.png"),
+                                new Chesses(6,7, "/images/ma_trang_den.png"), new Chesses(7,7, "/images/xe_trang_trang.png")
+                            ];
+            let rawCol = 8;
+            let row = 0;
+            let col = 0
+            let interval;
+            $(document).ready(() => {
+                $("#game_start").hide();
+                painting();
+            });
+            
+
+            function painting() {
+               interval = setInterval(() => {
+                    if(row >= rawCol) {
+                        clearInterval(interval);
+                        showVS();
+                        return;
+                    } else {
+                        let img = getImage(row, col);
+                    let div = '<div class="cube" > <img src="'+img+'"  /> </div>';
+                    col += 1;
+                    if(col >= rawCol) {
+                        col = 0
+                        row += 1
+                    }
+                    $("#containt").append(div);
+                    }
+                }, 100);
+            }
+
+            function getImage(row, col) {
+                for(ele of list_chesses) {
+                    if (ele.row == row && ele.col == col) {
+                        return ele.image;
+                    }
+                }
+                let img = bg_img[0];
+                if(row % 2 == 0) {
+                    img = col % 2 == 0 ? bg_img[0] : bg_img[1]
+                } else {
+                    img = col % 2 == 0 ? bg_img[1] : bg_img[0]
+                }
+                return img;
+            }
+
+            function showVS() {
+                let topPos = 0;
+                const maxTop = -400;
+                $("#game_start").show();
+                interval = setInterval(() => {
+                    topPos -= 20;
+                    if (Math.abs(topPos) >= Math.abs(maxTop)) {
+                        clearInterval(interval);
+                        moveLeftRight();
+                    } else {
+                        $("#game_start").css('top',topPos + "px");
+                    }
+                }, 200);
+            }
+            function moveLeftRight() {
+                let maxLeft = 20;
+                let left = 0;
+                let count = 0;
+                interval = setInterval(() => {
+                    if (left > maxLeft) {
+                    left -= 10;
+                } else {
+                    left += 10;
+                }
+                $("#game_start").css('left',left + "px");
+                count += 1;
+                if(count == 20) {
+                    clearInterval(interval);
+                    shutdow();
+                }
+                }, 100);
+            }
+
+            function shutdow() {
+                let opacity = 1;
+                interval = setInterval(() => {
+                    opacity -= 0.1;
+                    $("#game_start").css('opacity',opacity);
+                    if(opacity <= 0) {
+                        clearInterval(interval);
+                    }
+                }, 100);
+            }
+            
+        </script>
+    </head>
+    <body>
+        <div id="myDiv" style="position: relative;">
+           <div id="containt">
+            
+           </div>
+           <div id="game_start">
+            <div>
+                <img style="width: 200px;" src="/images/thinh_card.png"/>
+            </div>
+            <div>
+                <h1 style="font-family: Cursive; color: red; font-size: 100px; top: 10px; position: relative;">VS</h1>
+            </div>
+            <div>
+                <img style="width: 200px;" src="/images/vien_card.png"/>
+            </div>
+            
+          </div>
+        </div>
+    </body>
+</html>
