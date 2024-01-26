@@ -65,7 +65,7 @@
             let interval;
             $(document).ready(() => {
                 $("#game_start").hide();
-                painting();
+                $("#main").hide();
             });
 
             function setEvent(obj) {
@@ -162,10 +162,17 @@
                     }
                 }, 100);
             }
+
+            function onStart() {
+                $("#startView").hide();
+                $("#main").show();
+                painting();
+            }
             
         </script>
     </head>
     <body>
+        <div id="startView" style="text-align: center;"><button onclick="onStart()" style="font-weight: bold; font-size: 40px; width: 200px; height: 50px; color: white; background-color: blue;">Start</button></div>
         <div id="main">
             <div id="myDiv" style="position: relative;">
                 <div id="containt">
