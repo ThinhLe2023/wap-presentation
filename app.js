@@ -1,29 +1,30 @@
-// const http = require('http');
+const http = require('http');
 
-// const express = require('express');
+const express = require('express');
 
-// const fs = require('fs');
+const fs = require('fs');
 
-// const app = express();
+const app = express();
 
-// app.use((req, res, next) => {
-//     console.log("In the middleware!");
-//     next();
-// });
-// app.use((req, res, next) => {
-//     console.log("In another middleware!");
-// });
+var ejs = require("ejs");
+var cookieParser = require('cookie-parser');
 
-// const server = http.createServer(app);
 
-// server.listen(3000);
+
+app.use(cookieParser())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 const mongoConnect = require('./util/database').mongoConnect;
 const Products = require('./models/product');
 
 mongoConnect(() => {
     console.log('connected  =====');
-    // let product = new Products('title', '14.3', 'first product ', 'https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/sunflower-1627193_1920.jpg?itok=td7mL8qA');
-    // product.save();
+    app.listen(80, () => {
+        console.log('Your Server is running on 80');
+    })
 });
+
+ console.log(Products.getAllProductByCategory(4));
 // try to save product 
