@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <style>
+        .main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login_form{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 200px;
+            flex-wrap: wrap;
+           
+        }
+        .login_form div {
+            margin-top: 10px;
+        }
+        .label {
+            width: 100px;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div class="main">
+        <div class="login_form">
+            <div class="label">
+                <span>User Name</span>
+            </div>
+            <div>
+                <input type="text" name="user_name"/>
+            </div>
+            <div class="label">
+                <span>Password</span>
+            </div>
+            <div>
+                <input type="text" name="user_name"/>
+            </div>
+            <div class="label"></div>
+            <div><input type="checkbox"/> <span>Remember</span></div>
+            <div class="label"></div>
+            <div> <button>Login</button> </div>
+        </div>
+    </div>
+</body>
+
+</html>
