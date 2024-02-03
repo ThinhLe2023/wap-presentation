@@ -26,5 +26,5 @@ mongoConnect(() => {
     })
 });
 
- console.log(Products.getAllProductByCategory(4));
+ console.log(Products.getAllProductByTitle('1'));
 // try to save product 
