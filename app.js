@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
 
-app.use(cookieParser())
+app.use(cookieParser("viennv"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -35,6 +35,7 @@ app.get('/*',(req, res, next) => {
     res.render('404');
 });
 
+
 // mongoConnect(() => {
 //     console.log('connected  =====');
 //     app.listen(80, () => {
@@ -42,5 +43,5 @@ app.get('/*',(req, res, next) => {
 //     })
 // });
 
- console.log(Products.getAllProductByTitle('1'));
+ //console.log(Products.getAllProductByTitle('1'));
 // try to save product 
