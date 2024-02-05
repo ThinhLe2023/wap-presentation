@@ -2,6 +2,7 @@ const http = require('http');
 
 const express = require('express');
 const adminRouter = require('./router/adminRouter')
+const productRouter = require('./router/productRouter.js');
 const fs = require('fs');
 
 const app = express();
@@ -18,7 +19,7 @@ app.engine('html', ejs.renderFile);
 app.use(cookieParser("viennv"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(express.static("views"))
 
 const mongoConnect = require('./util/database').mongoConnect;
 const Products = require('./models/product');
@@ -29,12 +30,13 @@ app.listen(80, () => {
 })
 
 app.use('/admin',adminRouter);
+app.use('/product', productRouter);
 
-
+/*
 app.get('/*',(req, res, next) => {
     res.render('404');
 });
-
+*/
 
 // mongoConnect(() => {
 //     console.log('connected  =====');
