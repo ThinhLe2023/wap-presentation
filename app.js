@@ -2,6 +2,7 @@ const http = require('http');
 
 const express = require('express');
 const adminRouter = require('./router/adminRouter')
+const customerRouter = require('./router/route');
 const fs = require('fs');
 
 const app = express();
@@ -28,6 +29,7 @@ app.listen(80, () => {
     console.log('Your Server is running on 80');
 })
 
+app.use('/', customerRouter);
 app.use('/admin',adminRouter);
 
 
