@@ -32,9 +32,9 @@ app.listen(80, () => {
     console.log('Your Server is running on 80');
 })
 
-app.use('/index', customerRouter);
 app.use('/admin',adminRouter);
 app.use('/product', productRouter);
+app.use(customerRouter);
 
 /*
 app.get('/*',(req, res, next) => {
