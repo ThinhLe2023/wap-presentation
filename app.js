@@ -1,5 +1,5 @@
 const http = require('http');
-
+const path = require('path');
 const express = require('express');
 const adminRouter = require('./router/adminRouter')
 const customerRouter = require('./router/route');
@@ -20,7 +20,9 @@ app.engine('html', ejs.renderFile);
 app.use(cookieParser("viennv"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static("views"))
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const mongoConnect = require('./util/database').mongoConnect;
 const Products = require('./models/product');
