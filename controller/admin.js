@@ -1,46 +1,82 @@
 const userList = require('../util/constant').adminLogin;
 const categoryList = require('../util/constant').category;
 const Product = require('../models/product')
+const Order = require('../models/order');
 exports.login = (req, res, next) => {
     console.log(userList);
     if (req.method == 'POST') {
         let username = req.body.username;
         let password = req.body.password;
-        // check had set username and password
-        
+        let remember = req.body.remember;
         if(username && password) {
             let user = userList.filter((e) => e.username == username && e.password == password)
             if (user.length > 0) {
+                if(remember) {
+                    console.log('set cookies   =====', user[0] );
+                    // set cookies
+                    res.cookie('logined', user[0].cookies, {maxAge: 1000 * 60 * 60 ,signed: true});
+                }
+                // set session
+                req.session.userName = user[0].username;
                 res.redirect('/admin/home');
             } else {
-                res.render('login', {error: 'Username or password is incorrect!'})
+                res.render('admin/login', {error: 'Username or password is incorrect!'})
             }
         } else {
-            res.redirect('back');
+            res.render('admin/login', {error: 'Require user name and password'});
         }
     } else {
-        res.render('login', {error: ''});
+        if(req.session.userName) {
+            res.redirect('/admin/home');
+            return;
+        }
+        let cookies = req.signedCookies.logined;
+        if(cookies) {
+            let user = userList.filter((e) => e.cookies == cookies);
+            if (user.length > 0) {
+                req.session.userName = user[0].username;
+                res.redirect('/admin/home');
+                return;
+            }
+        }
+        res.render('admin/login', {error: ''});
     }
 }
 
-
-
+exports.auth = (req, res, next) => {
+    if(req.session.userName) {
+        next();
+        return;
+    }
+    // check cookies
+    let cookies = req.signedCookies.logined;
+    console.log('signed cookies vlaue   =====', cookies );
+    if(cookies) {
+        let user = userList.filter((e) => e.cookies == cookies);
+        if (user.length > 0) {
+            req.session.userName = user[0].username;
+            next();
+            return;
+        }
+    }
+    res.redirect('/admin/login');
+}
 exports.adminGetProduct = (req, res, next) => {
-    console.log('herer ========');
-    res.render('product_create', {category: categoryList});
+    res.render('admin/product_create', {category: categoryList});
 }
 exports.adminGetProductId = (req, res, next) => {
+
     let id = req.params.id;
     console.log('load product');
     Product.getProductById(id).then(product => {
         if(product) {
-            res.render('product_update', {category: categoryList, product: product, error:''});
+            res.render('admin/product_update', {category: categoryList, product: product, error:''});
         } else {
-            res.render('product_update', {category: categoryList, error: 'Cannot find product'});
+            res.render('admin/product_create', {category: categoryList, error: 'Cannot find product'});
         }
     }).catch(e => {
         console.log('error load product id ' +  id);
-        res.render('product_update', {category: categoryList, error: 'Cannot find product'});
+        res.render('admin/product_create', {category: categoryList, error: 'Cannot find product'});
     })
 }
 
@@ -79,8 +115,26 @@ exports.adminPostProduct = (req, res, next) => {
 
 exports.adminHome = (req, res, next) => {
     Product.getAllProduct().then( result => {
-        res.render('admin_home', {list: result});
+        res.render('admin/admin_home', {list: result});
     }).catch(e => {
+        console.log(e);
+    });
+}
+
+exports.getAllOrder = (req, res, next) => {
+    Order.getAllOrders().then(orders => {
+        res.render('admin/admin_order', {orders: orders});
+    }).catch( e => {
+        console.log(e);
+    });
+}
+
+exports.removeOrder = (req, res, next) => {
+    let id = req.params.id;
+    Order.deleteById(id).then(result => {
+        console.log('delete order : ', result);
+        res.redirect('/admin/orders');
+    }).catch( e => {
         console.log(e);
     });
 }

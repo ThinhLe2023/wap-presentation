@@ -23,30 +23,27 @@ class Order {
             console.log(e);
         });
     }
-    static getAllOrders() {
+    static async getAllOrders() {
         const db = getDb();
-        return db.collection(collectionName).find().toArray()
-                .then(orders => orders)
-                .then( (orders) =>
-                    {
-                        // console.log(orders);
-                         let resultOrder = [];
-                         for (let order of orders) {
-                             resultOrder.push(
-                                 {_id : order._id, products: order.products.map(e => {
-                                     return Product.getProductById(e.proId.toString()).then( obj => {
-                                         let result = {...obj, amount: e.amount};
-                                         return result;
-                                     });
-                                 }) }
-                             );
-                         }
-                         console.log(' adsfasdfasdf asdfasdfasdf ==============',resultOrder);
-                         return resultOrder;
-                     }
-                )
-                .catch( e => {
+        let orders = await db.collection(collectionName).find().toArray();
+        for( let order of orders) {
+            for (let idx = 0 ; idx < order.products.length; idx ++) {
+                let proInfo = await Product.getProductById(order.products[idx].proId.toString());
+                order.products[idx] = {...proInfo, amount: order.products[idx].amount};
+            }
+        }
+        return orders;
+    }
+
+    static deleteById(id) {
+        const db = getDb();
+            return db.collection(collectionName).deleteOne({_id: new mongodb.ObjectId(id)})
+        .then(result => {
+            //console.log(result);
+            return result;
+        }).catch( e => {
             console.log(e);
+            return e;
         });
     }
 }
