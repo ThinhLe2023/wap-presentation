@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/product.css" /> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/product.js"></script>
     <script>
-        function addtocart(id) {
-            alert(id);
-            $.ajax({
-                "url": "/addcart",
-                "method": "GET",
-                "data":{id: id}
-            }).done(function(response){
-                console.log(response)
-            })
-        }
+  
     </script>
     <title>Document</title>
 </head>
@@ -65,21 +58,69 @@
                     </div>
                 </div>
                 <div style="width: 33.3333333333%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
+                    <div style="font-size: 18px; font-weight: bold; width: 100%;">
+                        <%= title %>
+                    </div>
                     <div style="font-size: 18px; font-weight: bold;">
-                        <%= desc %>
+                        <%= description %>
                     </div>
                     <br>
                     <h2>$<%= price %></h2>
                     <a style="padding-left: 0.5rem;padding-right: 0.5rem;font-weight: 700;justify-content: center;align-items: center;display: flex;background: #0071dc;
                         color: #fff;border-radius: 62.5rem;cursor: pointer;box-sizing: border-box; width: 171px; height: 40px;"
-                        onclick="addtocart('<%=id%>');"
+                        onclick="addtocart('<%=_id%>');"
                         >
                         <span>Add to cart</span>
                     </a>
                 </div>
             </div>
         </div>
+
+         <!-- ------cart----- -->
+         <div id = "cartwnd" class="cardwnd">
+         <div style="display: flex;flex-wrap: wrap; flex-direction: column; align-items: center;">
+             <div id = "closecart" style="align-self: flex-end; padding: 10px;" onclick="closeCart();">
+                 <a class="x">X</a>
+             </div>
+             <div id="inccart" style="width: 90%; flex: 0 0 auto; box-sizing: border-box;
+             padding-right: 0.75rem; padding-left: 0.75rem;">
+                 <!-- large box with border radious-->                
+                 Cha cart.length <%= cart.length %>
+                 <%- include('cartlist.html') %>
+             </div>
+             <div style="width: 90%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
+                 <div style="position: sticky; top: 115px;">
+                     <!--div with border-->
+                     <div style="box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026; border-radius: 0.5rem;">
+                         <div style="display: flex;flex-direction: column;margin: 0 auto; padding-left: 1rem;padding-right: 1rem;">
+                             <!--Subtotal-->
+                             <div style="display: flex; justify-content: space-between;align-items: center; padding-top: 1rem;">
+                                 <span style="font-weight: 700;">
+                                     Subtotal
+                                     <span id="spannoofitem" style="font-weight: 400;margin-left: 0.25rem;">(<%= noofitem %> items)</span>
+                                 </span>
+                                 <div style="width: 50%;display: flex; flex-direction: column;align-items: flex-end; ">
+                                     <div id="subtotal">$<%= subtotal %></div>
+                                 </div>
+                             </div>
+                             <!--Shipping-->
+                             <div style="display: flex; justify-content: space-between;align-items: center;padding-top: 0.25rem;">
+                                 <span>Shipping</span>
+                                 <div>$5</div>
+                             </div>
+                             <!--estimated -->
+                             <div style="display: flex;justify-content: space-between;align-items: center;font-weight: 700;padding-bottom: 1rem;padding-top: 1rem;box-sizing: border-box;;">
+                                 <label>Estimated total</label>
+                                 <div id="estotal" style="font-size: 1.125rem;">$<%= (parseFloat(subtotal)+5) %></div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+             </div>
+         </div>
+        </div>
     </div>
-    <input type="hidden" name="id" value="<%= id %>"/>
+    <input type="hidden" name="id" value="<%= _id %>"/>
 </body>
 </html>
