@@ -23,10 +23,11 @@ exports.productFiler = (req, res, next) => {
     });
 }
 
-exports.productTitleFiler = (req, res, next) => {
-    let title = req.params.title;
-    let newProds = Product.getAllProductByTitle(title).then(data => {
-        res.send(newProds);
+exports.getAllProductByTitle = (req, res, next) => {
+    let name = req.params.name;
+    console.log(name);
+    Product.getAllProductByTitle(name).then(data => {
+        res.send(data);
     });
 }
 
