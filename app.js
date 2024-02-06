@@ -42,8 +42,6 @@ app.use(multer({storage: fileStorege, fileFilter: fileFilter}).array('product_im
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use(express.static(path.join(__dirname, 'views')));
-
 const mongoConnect = require('./util/database').mongoConnect;
 const Products = require('./models/product');
 const Order = require('./models/order');
