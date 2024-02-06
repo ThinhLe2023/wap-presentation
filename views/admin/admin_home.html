@@ -16,22 +16,44 @@
         }
 
         .admin_home_body{
+            margin: auto;
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
+            width: 90%;
+            padding: 10px;
+        }
+        .item{
+            width: 22%;
+        }
+        .item img{
+            object-fit:fill;
         }
     </style>
     
 </head>
 
 <body>
-    <%- include('includes/admin_header.html') %>
+    <%- include('../includes/admin_header.html') %>
     <div class="admin_home_body">
-        <% for (product of list) {%>
+        <% for (product of list) { let imageUrl = '/images/download.png'; %>
+            <%if (product.imageUrl.length > 0) {
+                imageUrl = product.imageUrl[0];
+                if (imageUrl.indexOf('http') == -1) { imageUrl = '/'+imageUrl }
+            }
+            %>
             <div class="item">
-                
+                <div class="image">
+                    <a href="/admin/product-update/<%=product._id%>"> <img src="<%= imageUrl%>" alt="<%= product.title%>"> </a>
+                </div>
+            
+                <p> <%= product.title%> </p>
+                <p>price : <%= product.price%>$</p>
+                <p><%= product.description%></p>
             </div>
+
         <%}%>
-        <div class="item">
+        <!-- <div class="item">
             <div class="image">
                 <a href="/admin/product/1">
                     <img src="https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg" />
@@ -40,7 +62,7 @@
             <p> Iphone 1 </p>
             <p>price : 14.5$</p>
             <p>FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.</p>
-        </div>
+        </div> -->
 
         <!-- <div class="item">
             <div class="image">

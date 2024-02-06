@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product detail</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <style>
+        .images img{
+            width: 100px;
+            object-fit: scale-down;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <%- include('../includes/admin_header.html') %>
+    <form action="/admin/product" method="post" enctype="multipart/form-data">
+
+        <div>
+            <label>Product title : </label> <input type="text" name="title" />
+        </div>
+        <div>
+            <label>Price :</label> <input type="text" name="price" />
+        </div>
+        <div>
+            <label>Discount :</label> <input type="text" name="discount" />
+        </div>
+        <div>
+            <label>description :</label> <input type="text" name="description" />
+        </div>
+        <div>
+            <label>Category : </label> 
+            <select name="category">
+                <% for (ele of category) {%>
+                    <option value="<%=ele.id%>"><%=ele.name%></option>
+                <%}%>
+            </select>
+        </div>
+    <div>
+        <label> Image :  </label> <input type="file" name="product_images" multiple />
+    </div>
+    <div>
+        <button>Save</button>
+        </div>
+    </form>
+</body>
+
+</html>

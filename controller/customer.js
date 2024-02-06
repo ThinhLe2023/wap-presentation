@@ -1,16 +1,14 @@
-const listProduct = require('../models/product');
+const Product = require('../models/product');
 
 exports.home = (req, res, next) => {
-    console.log('here i am');
-    res.render('index', { path: '/', prods: listProduct });
+    res.render('index', { path: '/', Product.getAllProduct() });
 }
 
 exports.productFiler = (req, res, next) => {
     let category = req.params.category;
-    let newProds = listProduct.filter((item) => item.category == category);
-    console.log(newProds);
+    let newProds = Product.getAllProductByCategory(category);
+    //console.log(listProduct, newProds, category);
     res.send(newProds);
-    res.re
 }
 
 exports.adminHome = (req, res, next) => {
