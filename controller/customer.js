@@ -18,7 +18,7 @@ exports.getAllProduct = (req, res, next) => {
 exports.productFiler = (req, res, next) => {
     let category = req.params.category;
     console.log('here is href');
-    Product.getAllProduct().then(data => {
+    Product.getAllProductByCategory(category).then(data => {
         res.render('index', { path: '/filterCategory/' + category, prods: data });
     });
 }
@@ -30,7 +30,6 @@ exports.getAllProductByTitle = (req, res, next) => {
         res.send(data);
     });
 }
-
 
 exports.adminHome = (req, res, next) => {
     res.render('admin_home');
