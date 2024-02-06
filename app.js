@@ -1,6 +1,5 @@
 
 const express = require('express');
-const adminRouter = require('./router/adminRouter')
 const path = require('path');
 const multer = require('multer');
 const adminRouter = require('./router/adminRouter')
