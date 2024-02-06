@@ -7,16 +7,16 @@
                 <a class="<%= path === '/filter/1' ? 'active' : '' %>" href="/">Home</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/filter/1' ? 'active' : '' %>" onclick="filterProduct(1)">Phones</a>
+                <a class="<%= path === '/filter/1' ? 'active' : '' %>" href="/category/1">Phones</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/filter/2' ? 'active' : '' %>" onclick="filterProduct(2)">Laptops</a>
+                <a class="<%= path === '/filter/2' ? 'active' : '' %>" href="/category/2">Laptops</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/filter/3' ? 'active' : '' %>" onclick="filterProduct(3)">Accessories</a>
+                <a class="<%= path === '/filter/3' ? 'active' : '' %>" href="/category/3">Accessories</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/filter/4' ? 'active' : '' %>" onclick="filterProduct(4)">Others</a>
+                <a class="<%= path === '/filter/4' ? 'active' : '' %>" href="/category/4">Others</a>
             </li>
             <li class="main-header__item">
                 <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
@@ -29,7 +29,7 @@
         </ul>
     </nav>
     <div style="display: flex;">
-        <input type="text" id="searchId" style="width: 300px;"/> 
-        <img src="images/search_icon.png" alt="" width="20px" onclick="searchProductByName">
+        <input type="text" id="searchTextId" style="width: 300px;"/> 
+        <img src="images/search_icon.png" alt="" width="20px" onclick="searchProductByName()">
     </div>
 </header>
