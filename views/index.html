@@ -1,6 +1,7 @@
 <%- include('includes/header.html') %>
     <title>Shop</title>
     <link rel="stylesheet" href="css/main.css" />
+
 </head>
 
 <body>
@@ -9,7 +10,7 @@
 
     <main>
         <% if (prods.length > 0) { %>
-            <div class="grid">
+            <div class="grid" id="productContainer">
                 <% for (let product of prods) { %>
                     <article class="card product-item" style="width: 400px; padding-top: 20px;">
                         <header class="card__header">
