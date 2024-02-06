@@ -61,7 +61,11 @@ mongoConnect(() => {
     //     console.log('save order error ', e);
     // });
     // Order.getAllOrders()
-    // .then(orders => console.log(' result orders',orders))
+    // .then(orders => {
+    //     for(let obj of orders) {
+    //         console.log('order ====', obj);
+    //     }   
+    // })
     // .catch(e => console.log(e));
 });
 

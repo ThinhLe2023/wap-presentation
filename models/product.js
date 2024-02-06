@@ -30,7 +30,7 @@ class Product {
     static getAllProduct() {
         const db = getDb();
         return db.collection('products').find().toArray().then(products => {
-            console.log(products);
+           // console.log(products);
             return products;
         }).catch( e => {
             console.log(e);
@@ -59,7 +59,7 @@ class Product {
     static getProductById(id) {
         const db = getDb();
         return db.collection('products').find({_id: new mongodb.ObjectId(id)}).next().then(product => {
-            console.log(product);
+           // console.log(product);
             return product;
         }).catch( e => {
             console.log(e);
