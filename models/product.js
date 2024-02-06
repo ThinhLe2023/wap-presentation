@@ -1,51 +1,81 @@
+const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
-const listProduct = [];
 
 class Product {
-    constructor(id,title, price, discount, description,category, imageUrl) {
-        this._id = id;
+    constructor(title, price, discount, description,category, imageUrl, id) {
         this.title = title;
         this.price = price;
         this.discount = discount;
         this.description = description;
         this.category = category;
         this.imageUrl = imageUrl;
+        this._id = id;
     }
     save() {
         const db = getDb();
-        db.collection('products').insertOne(this).then(result => {
+        let objDB = db;
+        if (this._id) {
+            this._id = new mongodb.ObjectId(this._id);
+            objDB = db.collection('products')
+                      .updateOne({_id : this._id}, {$set: this});
+        } else {
+            objDB = db.collection('products').insertOne(this);
+        }
+        return objDB.then(result => {
             console.log(result);
         }).catch(err => {
             console.log(err);
         });
     }
     static getAllProduct() {
-        return listProduct;
+        const db = getDb();
+        return db.collection('products').find().toArray().then(products => {
+            console.log(products);
+            return products;
+        }).catch( e => {
+            console.log(e);
+        });
     }
 
     static getAllProductByCategory(category) {
-        return listProduct.filter((ele) => {
-            return ele.category == category;
+        const db = getDb();
+        return db.collection('products').find({'category': category}).toArray().then(products => {
+            //console.log(products);
+            return products;
+        }).catch( e => {
+            console.log(e);
         });
     }
 
     static getAllProductByTitle(title) {
-        return listProduct.filter((ele) => {
-            return ele.title.search(new RegExp(title, 'i')) != -1;
+        const db = getDb();
+        return db.collection('products').find({'title': new RegExp(title, 'i')}).toArray().then(products => {
+            //console.log(products);
+            return products;
+        }).catch( e => {
+            console.log(e);
+        });
+    }
+    static getProductById(id) {
+        const db = getDb();
+        return db.collection('products').find({_id: new mongodb.ObjectId(id)}).next().then(product => {
+            console.log(product);
+            return product;
+        }).catch( e => {
+            console.log(e);
+        });
+    }
+    static deleteById(id) {
+        const db = getDb();
+            return db.collection('products').deleteOne({_id: new mongodb.ObjectId(id)})
+        .then(result => {
+            //console.log(result);
+            return result;
+        }).catch( e => {
+            console.log(e);
+            return e;
         });
     }
  }
-
-listProduct.push(new Product(1,'iphone 1',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',1,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(2,'iphone 2',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',1,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(3,'iphone 3',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',2,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(4,'iphone 4',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',2,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(5,'iphone 5',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',3,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(6,'iphone 6',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',3,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(7,'iphone 7',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',4,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(8,'iphone 8',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',4,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(9,'iphone 9',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',4,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-listProduct.push(new Product(10,'iphone 10',14.5, 5.0,'FORGED IN TITANIUM - iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.',4,['https://nhadepso.com/wp-content/uploads/2023/02/hinh-nen-hoa-huong-duong-dep-cho-dien-thoai_1-768x1707.jpg', 'https://i.pinimg.com/1200x/57/b6/ac/57b6ac33b262f70e245c426ca70453c2.jpg'] ));
-
+ 
 module.exports = Product;
-module.exports = listProduct;
