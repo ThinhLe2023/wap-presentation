@@ -19,7 +19,7 @@ exports.productFiler = (req, res, next) => {
     let category = req.params.category;
     console.log('here is href');
     Product.getAllProduct().then(data => {
-        res.render('category', { path: '/filterCategory/' + category, prods: data });
+        res.render('index', { path: '/filterCategory/' + category, prods: data });
     });
 }
 
