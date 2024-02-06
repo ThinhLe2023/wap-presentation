@@ -1,15 +1,9 @@
-@ -0,0 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .btn:hover {
-            color: blue;
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/product.css" /> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
         function removeItem(self, id) {
@@ -19,7 +13,7 @@
             removeddiv.remove();
             
             $.ajax({
-                "url": "/removeitem",
+                "url": "product/removeitem",
                 "method": "GET",
                 "data":{id: id}
             }).done(function(response){
@@ -28,6 +22,28 @@
                 $("#subtotal").html(response.subtotal);
             })
             
+        }
+
+        function changeQuantity(self, id, num) {
+
+            $.ajax({
+                "url": "changequantity",
+                "method": "GET",
+                "data":{id: id, num: num}
+            }).done(function(response){
+                console.log(response);
+                $("#spannoofitem").html("(" + response.noofitem + " items)");
+                $("#subtotal").html(response.subtotal);
+                if(response.action == "remove") {
+                    let removeddiv = $(self).parent().parent().parent();
+                    console.log(removeddiv.html());
+                    removeddiv.remove();
+                } else {
+                    console.log($(self).parent().children('span').html());
+                    $(self).parent().children('span').html(response.newquantity);
+                }
+            })       
+               
         }
     </script>
     <title>Document</title>
@@ -39,27 +55,25 @@
                 <div style="width: 66.6666666667%; flex: 0 0 auto; box-sizing: border-box;
                 padding-right: 0.75rem; padding-left: 0.75rem;">
                     <!-- large box with border radious-->
-                    <div style="display: flex;flex-direction: column;box-sizing: border-box;
-                        margin: 0 auto 1.5rem;
+                    <div class="flexcolumn" style="box-sizing: border-box; margin: 0 auto 1.5rem;
                         box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026;border-radius: 0.5rem;">
                         <!--first div with bg-->
                         <div style="border-color: #f1f1f2;box-sizing: border-box; padding-bottom: 1rem;background-color: #f2f8fd;
-                            border-color: #f1f1f2;border-bottom-style: solid; border-bottom-width: 1px;">
-                            <div>
-                                Shipping, arrivesTue, Feb 6–Wed, Feb 28
-                            </div>
-
+                            border-color: #f1f1f2;border-bottom-style: solid; border-bottom-width: 1px; font-size: 1.75rem; font-weight: 700; padding: 20px;">                           
+                                Cart                           
                         </div>
                         <!--items-->
-                        <div style="display: flex; flex-direction: column;">
+                        <div clas="flexcolumn">
                             <!--number of item-->
                             <div style="padding-left: 1.5rem;padding-right: 1.5rem;margin-top: 1rem;justify-content: space-between;align-items: center; box-sizing: border-box;">
-                                <div style="font-size: 1.125rem;font-weight: 700;">2 items</div>
+                                <div style="font-size: 1.125rem;font-weight: 700;">
+                                    <span id="spannoofitem1"><%= noofitem %></span> items
+                                </div>
                             </div>
+                            <!-- list of items in cart-->
                             <section>
-                                <% for(let i = 0; i< 2; i++) {%>
-                                <div style="display: flex;flex-direction: column;box-sizing: border-box; margin: 0.5rem; position: relative;
-                                    border-top: 1px solid #f1f1f2;">
+                                <% for(let i = 0; i< cart.length; i++) {%>
+                                <div class="flexcolumn" style="box-sizing: border-box; margin: 0.5rem; position: relative;border-top: 1px solid #f1f1f2;">
                                     <div style="display: flex;position: relative;padding-top: 0.25rem;">
                                         <div style="margin-top: 0.25rem;margin-bottom: 1rem;;display: flex;box-sizing: border-box;">
                                             <a>
@@ -67,10 +81,10 @@
                                             </a>
                                         </div>
                                         <div style="display: flex;width: 60%;box-sizing: border-box;color: #2e2f32; padding-top: 10px;">
-                                            <span>DecorRack 1 Oz Shot Glasses, Hard Clear Plastic Shot Cups (80 Pack)</span>
+                                            <span><%= cart[i].title %></span>
                                         </div>
                                         <div style="text-align: right;line-height: 1.25;font-size: 1.125rem;font-weight: 700;box-sizing: border-box; padding-top: 10px; width: 30%; padding-right: 10px;">
-                                            $1000
+                                            $<%= cart[i].price %>
                                         </div>
                                     </div>
                                     <!--remove-->
@@ -82,10 +96,12 @@
                                             </a>                                       
                                         </div>
                                         <div style="width: 120px;padding: 0.25rem;display: flex;border-radius: 9999px; border: 1px solid #babbbe; font-size: 1rem;">
-                                            <button type="button" style="width: 1.5rem;height: 1.5rem;justify-content: center;align-items: center;display: flex;border-radius: 1rem; border:0px">
+                                            <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', -1);">
                                                 -</button>
-                                            <span style="margin: 0 auto; display: flex; align-items: center;font-weight: 700;">1</span>
-                                            <button type="button" style="width: 1.5rem;height: 1.5rem;justify-content: center;align-items: center;display: flex;border-radius: 1rem; border:0px">
+                                                <span id="spanquantity" style="margin: 0 auto; display: flex; align-items: center;font-weight: 700;">
+                                                    <%= cart[i].quantity %>
+                                                </span>
+                                            <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', 1);">
                                                 +</button>
                                         </div>
                                         
@@ -111,7 +127,7 @@
                                         <span id="spannoofitem" style="font-weight: 400;margin-left: 0.25rem;">(<%= noofitem %> items)</span>
                                     </span>
                                     <div style="width: 50%;display: flex; flex-direction: column;align-items: flex-end; ">
-                                        <div>$13.81</div>
+                                        <div id="subtotal">$<%= subtotal %></div>
                                     </div>
                                 </div>
                                 <!--Shipping-->
@@ -122,7 +138,7 @@
                                 <!--estimated -->
                                 <div style="display: flex;justify-content: space-between;align-items: center;font-weight: 700;padding-bottom: 1rem;padding-top: 1rem;box-sizing: border-box;;">
                                     <label>Estimated total</label>
-                                    <div id="subtotal" style="font-size: 1.125rem;">$<%= subtotal %></div>
+                                    <div id="estotal" style="font-size: 1.125rem;">$<%= subtotal + 5 %></div>
                                 </div>
                             </div>
                         </div>
