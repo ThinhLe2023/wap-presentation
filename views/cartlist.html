@@ -1,0 +1,65 @@
+<div style="display: flex;flex-direction: column;box-sizing: border-box;
+                     margin: 0 auto 1.5rem;
+                     box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026;border-radius: 0.5rem;">
+                     <!--first div with bg-->
+                     <div style="border-color: #f1f1f2;box-sizing: border-box; padding-bottom: 1rem;background-color: #f2f8fd;
+                         border-color: #f1f1f2;border-bottom-style: solid; border-bottom-width: 1px;">
+                         <div>
+                             Shipping, arrivesTue, Feb 6–Wed, Feb 28
+                         </div>
+
+                     </div>
+                     <!--items-->
+                     <div style="display: flex; flex-direction: column;">
+                         <!--number of item-->
+                         <div style="padding-left: 1.5rem;padding-right: 1.5rem;margin-top: 1rem;justify-content: space-between;align-items: center; box-sizing: border-box;">
+                             <div style="font-size: 1.125rem;font-weight: 700;">2 items</div>
+                         </div>                        
+                         <section>
+                            Vong lap
+                            cart.length: <%=  cart.length%>
+                            <% for(let i = 0; i< cart.length; i++) {%>
+                                
+                            <div class="flexcolumn" style="box-sizing: border-box; margin: 0.5rem; position: relative;border-top: 1px solid #f1f1f2;">
+                                <div style="display: flex;position: relative;padding-top: 0.25rem;">
+                                    <div style="margin-top: 0.25rem;margin-bottom: 1rem;;display: flex;box-sizing: border-box;">
+                                        <a>
+                                            <img src="/images/i15.jpeg" height="96px" width="96px"/>
+                                        </a>
+                                    </div>
+                                    <div style="display: flex;width: 60%;box-sizing: border-box;color: #2e2f32; padding-top: 10px;">
+                                        <span><%= cart[i].title %></span>
+                                    </div>
+                                    <div style="text-align: right;line-height: 1.25;font-size: 1.125rem;font-weight: 700;box-sizing: border-box; padding-top: 10px; width: 30%; padding-right: 10px;">
+                                        $<%= cart[i].price %>
+                                    </div>
+                                </div>
+                                <!--remove-->
+                                <div style="right: 0px; bottom: -8px; position: absolute;margin-left: auto;margin-bottom: 0.5rem;margin-top: 0.5rem;display: flex;align-items: center; gap: 15px;">
+                                    
+                                    <div>
+                                        <a class="btn" style="text-align: center; text-decoration: underline;cursor: pointer;" onclick="removeItem(this, '1');">
+                                            Remove
+                                        </a>                                       
+                                    </div>
+                                    <div style="width: 120px;padding: 0.25rem;display: flex;border-radius: 9999px; border: 1px solid #babbbe; font-size: 1rem;">
+                                        <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', -1);">
+                                            -</button>
+                                            <span id="spanquantity" style="margin: 0 auto; display: flex; align-items: center;font-weight: 700;">
+                                                <%= cart[i].quantity %> 
+                                            </span>
+                                        <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', 1);">
+                                            +</button>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <% } %>
+                        </section>                         
+
+                         
+
+                     </div>
+
+                 </div>
