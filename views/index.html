@@ -1,0 +1,35 @@
+<%- include('includes/header.html') %>
+    <title>Shop</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <%- include('includes/banner.html') %>
+    <%- include('includes/menu.html') %>
+
+    <main>
+        <% if (prods.length > 0) { %>
+            <div class="grid">
+                <% for (let product of prods) { %>
+                    <article class="card product-item" style="width: 400px; padding-top: 20px;">
+                        <header class="card__header">
+                            <h1 class="product__title"><%= product.title %></h1>
+                        </header>
+                        <div class="card__image">
+                            <img src="<%= product.imageUrl[0] %>" alt="A <%= product.title %>">
+                        </div>
+                        <div class="card__content">
+                            <h2 class="product__price">$<%= product.price %> </h2>
+                            <p class="product__description"><%= product.description %></p>
+                        </div>
+                        <div class="card__actions">
+                            <button class="btn">Add to Cart</button>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Products Found!</h1>
+        <% } %>
+    </main>
+<%- include('includes/footer.html') %>

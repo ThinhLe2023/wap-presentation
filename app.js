@@ -1,7 +1,11 @@
+
 const express = require('express');
 const adminRouter = require('./router/adminRouter')
 const path = require('path');
 const multer = require('multer');
+const adminRouter = require('./router/adminRouter')
+const customerRouter = require('./router/route');
+const productRouter = require('./router/productRouter.js');
 const app = express();
 
 var ejs = require("ejs");
@@ -38,6 +42,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(multer({storage: fileStorege, fileFilter: fileFilter}).array('product_images')); //single('product_images'));//
 //app.use(multer().array('product_images'));
 
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const mongoConnect = require('./util/database').mongoConnect;
 const Products = require('./models/product');
@@ -66,11 +72,22 @@ mongoConnect(() => {
 // })
 
 app.use('/admin',adminRouter);
+app.use('/product', productRouter);
+app.use(customerRouter);
 
-
+/*
 app.get('/*',(req, res, next) => {
     res.render('404');
 });
+=======
+*/
+
+// mongoConnect(() => {
+//     console.log('connected  =====');
+//     app.listen(80, () => {
+//         console.log('Your Server is running on 80');
+//     })
+// });
 
  //console.log(Products.getAllProductByTitle('1'));
 // try to save product 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        function addtocart(id) {
+            alert(id);
+            $.ajax({
+                "url": "/addcart",
+                "method": "GET",
+                "data":{id: id}
+            }).done(function(response){
+                console.log(response)
+            })
+        }
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div style="margin: 0 auto;max-width: 1440px;width: 90%;padding-left: 20px;padding-right: 20px;">
+            <div style="display: flex;flex-wrap: wrap;">
+                <div style="width: 66.6666666667%; flex: 0 0 auto; box-sizing: border-box;
+                padding-right: 0.75rem; padding-left: 0.75rem;">
+                    <!--img + detail-->
+                    <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 117px;margin: .5rem;position: relative;">
+                                <div style="height: 645px;max-height: 645px;margin-top: 0.5rem;overflow-y: hidden;box-sizing: border-box;">
+                                    <% for (let img of imgarr) {%>
+                                    <div style="text-align: center;margin-bottom: 0.5rem;overflow: hidden;border-width: 0.125rem;border-radius: 0.5rem;border-color: #fff; border-style: solid;
+                                        box-sizing: border-box;">
+                                        <img src="<%= img %>" width="117px" height="117px"/>
+
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div style="position: relative; align-self: center; width:100%;margin:0 auto auto; box-sizing: border-box;">
+                                <div style="width: 100%;display: flex;justify-content: center;align-items: flex-start;box-sizing: border-box;">
+                                    <div style="height:613px;visibility:hidden; width: 68px; box-sizing: border-box;"></div>
+                                    <div style="height: 640px; box-sizing: border-box;">
+                                        <img src="<%= mainimg %>"
+                                            height="640px", width="640px"/>
+                                    </div>
+                                </div>
+                                <div class="refclass"></div>
+                                <div style="width: 40px;margin-right: 1rem;position: absolute; right: 0; top: 0;box-sizing: border-box;">
+                                    <button>
+                                        Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--detail-->
+                        <div style="padding-bottom: 0.5rem;padding-top: 0.5rem;box-sizing: border-box;">
+                            <h2>At a glance</h2>
+                            <div style="margin-bottom: 0.5rem; margin-top: 0.5rem; background-color: #f8f8f8;
+                                    border-radius: 0.5rem;line-height: 1.25;">
+                                Service provider: AT & T
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 33.3333333333%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
+                    <div style="font-size: 18px; font-weight: bold;">
+                        <%= desc %>
+                    </div>
+                    <br>
+                    <h2>$<%= price %></h2>
+                    <a style="padding-left: 0.5rem;padding-right: 0.5rem;font-weight: 700;justify-content: center;align-items: center;display: flex;background: #0071dc;
+                        color: #fff;border-radius: 62.5rem;cursor: pointer;box-sizing: border-box; width: 171px; height: 40px;"
+                        onclick="addtocart('<%=id%>');"
+                        >
+                        <span>Add to cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="<%= id %>"/>
+</body>
+</html>
