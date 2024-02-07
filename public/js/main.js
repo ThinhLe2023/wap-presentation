@@ -53,7 +53,10 @@ function addToCart(itemId){
     'url': "/product/addcart",
     'type': 'GET',
     "data":{id: itemId},
-    'success': function() {alert('Added Successful!!!')},
+    'success': function(response) {
+      $(".cartlength").html(response.noofitem);
+      //alert('Added Successful!!!');
+    },
     'error': function() {alert('Added Failed!!!')}
   });
 }
@@ -129,8 +132,12 @@ function searchText(input) {
           $("#searchLoading").hide();
           let html = ''
           for(obj of data) {
+            let image = 'images/download.png';
+            if(obj.imageUrl && obj.imageUrl.length > 0) {
+              image = '/'+obj.imageUrl[0];
+            }
             html += '<div class="searchContainItem">';
-            html += '<a href="/product/detail?id='+obj._id+'"> <img src="/'+obj.imageUrl[0]+'" style="width: 70px;"/> </a>';
+            html += '<a href="/product/detail?id='+obj._id+'"> <img src="'+image+'" style="width: 70px;"/> </a>';
             html += '<div>';
             html += '<p style="color: blue;">'+ obj.title +'</p>';
             html += '<p style="color: red;" >Price : '+obj.price+' $</p>';

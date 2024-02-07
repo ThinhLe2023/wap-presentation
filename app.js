@@ -52,6 +52,15 @@ mongoConnect(() => {
         console.log('Your Server is running on 80');
     });
 
+    // Products.getAllProduct().then(res => {
+    //     console.log(res);
+    //     for (ele of res) {
+    //         if(!ele.imageURL) {
+    //             Products.deleteById(ele._id);
+    //         }
+    //     }
+    // });
+
     // let order = new Order('conntant viennv', [{_id : '65c2c24c752f51ba062c79e5', amount: 2}, {_id : '65c2da3025a75604ab2c07f7', amount: 2}])
     // order.save().then(result => {
     //     console.log('save order   ', result);
