@@ -15,7 +15,7 @@ function handleSuccessFn(data) {
   console.log(data);
   if(Array.isArray(data)){
     for (const item of data) {
-      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;" onclick="forwardToProductDetail({id: '+item._id+'})"><header class="card__header">';
+      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;" onclick="forwardToProductDetail({id: `'+item._id+'`})"><header class="card__header">';
       html += '<h1 class="product__title">' + item.title;
       html += '</h1></header><div class="card__image">';
       if(!item.imageUrl) {item.imageUrl = [`images/download.png`];}
@@ -131,8 +131,12 @@ function searchText(input) {
           $("#searchLoading").hide();
           let html = ''
           for(obj of data) {
+            let image = 'images/download.png';
+            if(obj.imageUrl && obj.imageUrl.length > 0) {
+              image = '/'+obj.imageUrl[0];
+            }
             html += '<div class="searchContainItem">';
-            html += '<a href="/product/detail?id='+obj._id+'"> <img src="/'+obj.imageUrl[0]+'" style="width: 70px;"/> </a>';
+            html += '<a href="/product/detail?id='+obj._id+'"> <img src="'+image+'" style="width: 70px;"/> </a>';
             html += '<div>';
             html += '<p style="color: blue;">'+ obj.title +'</p>';
             html += '<p style="color: red;" >Price : '+obj.price+' $</p>';
