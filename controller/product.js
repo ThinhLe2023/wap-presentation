@@ -3,23 +3,25 @@ const db = require("../models/product.js")
 var ejs = require("ejs");
 let path = require('path');
 function getProduct (req, res, next) {
-    
-    let id  = '65c173e38cfa37f5178c670e';
+    //console.log(req.query);
+    let id  = '65c258c3cf39e0972174b9c0';
     if(req.body.id)
         id = req.body.id;
+    else if(req.query.id)
+        id = req.query.id;
     let model = {id:1, imgarr: imgarr};
-
+    console.log("getProduct");
     /*
    db.getAllProduct().then(res=>{
     console.log("getAllProduct================", res);
    })
    */
     db.getProductById(id).then(result => {
-        //console.log("getProductById res_________", result);
+        console.log("getProductById res_________", result);
         if(result) {
             //console.log("getProductById result_________", result);
             model = result;
-            model.mainimg = "/images/i15.jpeg"; //result.imageUrl;
+            model.mainimg = "/" + result.imageUrl[0]; //result.imageUrl;
             model.imgarr = imgarr;
             let cart = getCartFromCookie(req, res);
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
@@ -28,6 +30,8 @@ function getProduct (req, res, next) {
             model.cart = cart;
             //console.log("model", model);
             res.render("detail", model);
+        } else {
+            res.send("No data");
         }
     });
     /*

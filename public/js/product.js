@@ -78,3 +78,34 @@ function changeQuantity(self, id, num) {
 function closeCart(){
     $("#cartwnd").css("opacity", "0");
 }
+
+$(function() {
+    $("#smallimgs div img")
+        .mouseover(function() { 
+            $("#smallimgs div img").each(function(i, ele) {
+                $(ele).parent().css("border-color", "#fff");
+            })
+            $(this).parent().css("border-color", "blue");
+            let src = $(this).attr("src");
+            //alert(src);
+            $("#mainimg").attr("src", src);
+        
+        })
+        .mouseout(function() {
+            let mainimg = $("input[name='mainimg']").val();
+            $("#mainimg").attr("src", mainimg);
+            $("#smallimgs div img").each(function(i, ele) {
+                if($(ele).attr("src") == mainimg) {
+                    $(ele).parent().css("border-color", "blue");
+                } else {
+                    $(ele).parent().css("border-color", "#fff");
+                }
+            })
+        })
+        .click(function() {
+            let src = $(this).attr("src");
+            $("#mainimg").attr("src", src);
+            $("input[name='mainimg']").val(src);
+            $(this).parent().css("border-color", "blue");
+        });
+   });
