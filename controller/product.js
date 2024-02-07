@@ -1,7 +1,9 @@
 let imgarr = ["/images/i15.jpeg", "/images/img3.jpeg", "/images/img4.jpeg", "/images/img5.jpeg"]
 const db = require("../models/product.js")
+const Order = require('../models/order');
 var ejs = require("ejs");
 let path = require('path');
+
 function getProduct (req, res, next) {
     //console.log(req.query);
     let id  = '65c258c3cf39e0972174b9c0';
@@ -196,4 +198,22 @@ function getCart(req, res, next) {
     res.render("cart", model);
 }
 
-module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity}
+function saveOrder(req, res, next) {
+    console.log("saveOrder controller", req.query.contact);
+    let cart = getCartFromCookie(req, res);
+    if(req.query.contact && cart.length > 0) {
+        console.log("IN save");
+        let savedCart = cart.map(ele=>({_id:ele.id, amount: ele.price}));
+        console.log("savedCart", savedCart);
+        let order = new Order(req.query.contact, savedCart);
+
+        order.save().then(result => {
+            console.log('save order : ', result);
+            res.cookie("cart", []);
+            res.send({result: "Success"});
+        }).catch( e => {
+            console.log(e);
+        });
+    }
+}
+module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity, saveOrder}

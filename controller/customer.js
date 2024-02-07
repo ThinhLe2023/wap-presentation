@@ -3,7 +3,8 @@ const Product = require('../models/product');
 
 exports.home = (req, res, next) => {
     let listProd = [];
-    res.render('index', { path: '/', prods: listProd });
+    let cartlength = req.cookies.cart?req.cookies.cart.length:0;
+    res.render('index', { path: '/', prods: listProd, noofitem: cartlength });
 }
 
 exports.getAllProduct = (req, res, next) => {

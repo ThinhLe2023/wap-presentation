@@ -1,6 +1,4 @@
-<div style="display: flex;flex-direction: column;box-sizing: border-box;
-                     margin: 0 auto 1.5rem;
-                     box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026;border-radius: 0.5rem;">
+                <div class="box-border">
                      <!--first div with bg-->
                      <div style="border-color: #f1f1f2;box-sizing: border-box; padding-bottom: 1rem;background-color: #f2f8fd;
                          border-color: #f1f1f2;border-bottom-style: solid; border-bottom-width: 1px;">
@@ -18,7 +16,7 @@
                          <section>
                             <% for(let i = 0; i< cart.length; i++) {%>
                                 
-                            <div class="flexcolumn" style="box-sizing: border-box; margin: 0.5rem; position: relative;border-top: 1px solid #f1f1f2;">
+                            <div class="flexcolumn" style="box-sizing: border-box; margin: 0.5rem; position: relative;border-top: 1px solid #f1f1f2; background-color: #fff;">
                                 <div style="display: flex;position: relative;padding-top: 0.25rem;">
                                     <div style="margin-top: 0.25rem;margin-bottom: 1rem;;display: flex;box-sizing: border-box;">
                                         <a>
@@ -36,17 +34,19 @@
                                 <div style="right: 0px; bottom: -8px; position: absolute;margin-left: auto;margin-bottom: 0.5rem;margin-top: 0.5rem;display: flex;align-items: center; gap: 15px;">
                                     
                                     <div>
-                                        <a class="btn" style="text-align: center; text-decoration: underline;cursor: pointer;" onclick="removeItem(this, '1');">
+                                        <a class="btn-quanity" style="text-align: center; text-decoration: underline;cursor: pointer;" onclick="removeItem(this, '1');">
                                             Remove
                                         </a>                                       
                                     </div>
                                     <div style="width: 120px;padding: 0.25rem;display: flex;border-radius: 9999px; border: 1px solid #babbbe; font-size: 1rem;">
-                                        <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', -1);">
+                                        <button class="btn-quanity quantity-change" style="width: 1.5rem;height: 1.5rem;justify-content: center;align-items: center;display: flex;border-radius: 1rem; border:0px;"
+                                            onclick="changeQuantity(this, '<%=cart[i].id %>', -1);">
                                             -</button>
                                             <span id="spanquantity" style="margin: 0 auto; display: flex; align-items: center;font-weight: 700;">
                                                 <%= cart[i].quantity %> 
                                             </span>
-                                        <button class="btn quantity-change" onclick="changeQuantity(this, '<%=cart[i].id %>', 1);">
+                                        <button class="btn-quanity quantity-change" style="width: 1.5rem;height: 1.5rem;justify-content: center;align-items: center;display: flex;border-radius: 1rem; border:0px;"
+                                            onclick="changeQuantity(this, '<%=cart[i].id %>', 1);">
                                             +</button>
                                     </div>
                                     

@@ -62,7 +62,7 @@ a.x {
     font-size: 1.25rem;
 }
 
-.btn {
+.btn-quanity {
     cursor: pointer;
 }
 
@@ -71,7 +71,7 @@ a.x:hover {
     text-decoration: none;
 }
 
-.btn:hover, a.x:hover {
+.btn-quanity:hover, a.x:hover {
     color: blue;
     font-weight: 750;
 }
@@ -93,4 +93,29 @@ a.x:hover {
     background-color: #f2f8fd; 
     opacity: 0;
     visibility: hidden;
+}
+
+.box-border {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026;
+    border-radius: 0.5rem;
+}
+
+.blue-button {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: #0071dc;
+    color: #fff;
+    border-radius: 62.5rem;
+    cursor: pointer;
+    box-sizing: border-box; 
+    width: 171px; 
+    height: 40px;
 }

@@ -92,3 +92,14 @@ $(function() {
             $(this).parent().css("border-color", "blue");
         });
    });
+
+   function saveOrder() {
+    alert("saveOrder");
+    $.ajax({
+        "url": "/product/saveorder",
+        "method": "GET",
+        "data":{contact: $("#contactInfoId").val()}
+    }).done(function(response) {
+        console.log(response);       
+    })
+   }
