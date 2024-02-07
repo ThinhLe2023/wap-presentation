@@ -72,7 +72,7 @@ function searchText(input) {
           let html = ''
           for(obj of data) {
             html += '<div class="searchContainItem">';
-            html += '<a href="/product/detail/'+obj._id+'"> <img src="/'+obj.imageUrl[0]+'" style="width: 70px;"/> </a>';
+            html += '<a href="/product/detail?id='+obj._id+'"> <img src="/'+obj.imageUrl[0]+'" style="width: 70px;"/> </a>';
             html += '<div>';
             html += '<p style="color: blue;">'+ obj.title +'</p>';
             html += '<p style="color: red;" >Price : '+obj.price+' $</p>';
