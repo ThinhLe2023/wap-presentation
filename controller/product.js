@@ -20,7 +20,7 @@ function getProduct (req, res, next) {
             //console.log("getProductById result_________", result);
             model = result;
             model.mainimg = "/" + result.imageUrl[0]; //result.imageUrl;
-            model.imgarr = imgarr;
+            model.imgarr = result.imageUrl.map(ele=>"/" + ele);
             let cart = getCartFromCookie(req, res);
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
             let subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
