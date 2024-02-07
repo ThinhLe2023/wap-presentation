@@ -55,7 +55,8 @@ function addToCart (req, res, next) {
         db.getProductById(id).then(
             //console.log("getProductById res_________", result);
             function(val) { 
-                cart.push({id:id, quantity:1, price:parseFloat(val.price), title: val.title});
+                cart.push({id:id, quantity:1, price:parseFloat(val.price), title: val.title
+                            , imgurl: ((val.imageUrl && val.imageUrl.length) ? val.imageUrl[0] : "images/download.png")});
                 //console.log("Sau khi add vo cart", cart);
                 res.cookie('cart', cart);
                 console.log("addToCart cart getPrice", cart);
