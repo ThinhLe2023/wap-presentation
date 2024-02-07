@@ -1,15 +1,40 @@
 
 <div class="header">
-    <h1>Welcome to admin home page</h1>
+    <h1 style="color: brown;">Welcome <span style="color:red;"><%= name%></span> to  admin home page</h1> 
     <nav>
-        <div>
-            <a href="/admin/home" >Home Page</a>
+        <div class="nav-left">
+            <%if (path.indexOf('home') != -1) { %>
+                <div class="select">
+                    <a href="/admin/home" >Home Page</a>
+                </div>
+            <%} else {%>
+                <div>
+                    <a href="/admin/home" >Home Page</a>
+                </div>
+            <%}%>
+            
+            <%if (path.indexOf('product') != -1) { %>
+                <div class="select">
+                    <a href="/admin/product" >Product</a>
+                </div>
+            <%} else {%>
+                <div>
+                    <a href="/admin/product" >Product</a>
+                </div>
+            <%}%>
+
+            <%if (path.indexOf('order') != -1) { %>
+                <div class="select">
+                    <a href="/admin/orders" >Order</a>
+                </div>
+            <%} else {%>
+                <div>
+                    <a href="/admin/orders" >Order</a>
+                </div>
+            <%}%>
         </div>
-        <div>
-            <a href="/admin/product" >Product</a>
-        </div>
-        <div>
-            <a href="/admin/orders" >Order</a>
+        <div class="nav-right">
+            <a href="/admin/logout" style="color: red;" >Logout</a>
         </div>
     </nav>
 </div>

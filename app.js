@@ -52,7 +52,7 @@ mongoConnect(() => {
         console.log('Your Server is running on 80');
     });
 
-    // let order = new Order('conntant viennv', [{_id : '65c173e38cfa37f5178c670e', amount: 2}, {_id : '65c17b9d70e14aa86dc3360b', amount: 2}])
+    // let order = new Order('conntant viennv', [{_id : '65c2c24c752f51ba062c79e5', amount: 2}, {_id : '65c2da3025a75604ab2c07f7', amount: 2}])
     // order.save().then(result => {
     //     console.log('save order   ', result);
     // }).catch(e => {
@@ -65,6 +65,10 @@ mongoConnect(() => {
     //     }   
     // })
     // .catch(e => console.log(e));
+    // console.log('start searc ========')
+    // Products.getAllProductByTitle('pro').then(pros => {
+    //     console.log('list product by title : ', pros);
+    // })
 });
 
 app.use('/admin',adminRouter);

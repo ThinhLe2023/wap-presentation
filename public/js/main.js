@@ -1,23 +1,13 @@
-function filterProduct(category) {
-  console.log('filterProduct');
-  $('#productContainer').html('');
-  $.ajax({
-    'url': "/filter/" + category,
-    'type': 'GET',
-    'data': {},
-    'success': handleSuccessFn,
-    'error': handleErrorFn
-  });
-}
-
-function refreshProducts() {
-  $.ajax({
-    'url': "/allProducts",
-    'type': 'GET',
-    'data': {},
-    'success': handleSuccessFn,
-    'error': handleErrorFn
-  });
+function refreshProducts(loading) {
+  if(loading.length == 1 && loading[0].id ==='loadingId'){
+    $.ajax({
+      'url': "/allProducts",
+      'type': 'GET',
+      'data': {},
+      'success': handleSuccessFn,
+      'error': handleErrorFn
+    });
+  }
 }
 
 function handleSuccessFn(data) {
@@ -44,20 +34,20 @@ function handleErrorFn(shr, error, message) {
   alert(message);
 }
 
-function searchProductByName() {
-  let text = $('#searchTextId').val();
-  //console.log(text);
-  $.ajax({
-    'url': "/getProductByName/" + text,
-    'type': 'GET',
-    'data': {},
-    'success': handleSuccessFn,
-    'error': handleErrorFn
-  });
-}
+// function searchProductByName() {
+//   let text = $('#searchTextId').val();
+//   //console.log(text);
+//   $.ajax({
+//     'url': "/getProductByName/" + text,
+//     'type': 'GET',
+//     'data': {},
+//     'success': handleSuccessFn,
+//     'error': handleErrorFn
+//   });
+// }
+
 
 function addToCart(itemId){
-  // console.log('addToCart' , itemId);
   $.ajax({
     'url': "/product/addcart",
     'type': 'GET',
@@ -66,3 +56,44 @@ function addToCart(itemId){
     'error': function() {alert('Added Failed!!!')}
   });
 }
+
+let timoutId;
+function searchText(input) {
+  let text = $(input).val();
+  if(text.length > 0) {
+    $("#searchResult").show();
+    $("#searchLoading").show();
+    if(timoutId) {
+      clearTimeout(timoutId);
+    }
+    timoutId = setTimeout(() => {
+      $.ajax({
+        'url': "/getProductByName/" + text,
+        'type': 'GET',
+        'data': {},
+        'success': (data) => {
+          $("#searchLoading").hide();
+          let html = ''
+          for(obj of data) {
+            html += '<div class="searchContainItem">';
+            html += '<a href="/product/detail?id='+obj._id+'"> <img src="/'+obj.imageUrl[0]+'" style="width: 70px;"/> </a>';
+            html += '<div>';
+            html += '<p style="color: blue;">'+ obj.title +'</p>';
+            html += '<p style="color: red;" >Price : '+obj.price+' $</p>';
+            html += '</div>';
+            html += '</div>';
+          }
+          $("#searchContain").html(html);
+        },
+        'error': handleErrorFn
+      });
+    }, 300);
+  } else {
+    $("#searchResult").hide();
+    $("#searchContain").html('');
+  }
+}
+
+$(document).ready(() => {
+  $("#searchResult").hide();
+});

@@ -1,10 +1,10 @@
-<script src="js/main.js"></script>
+<script src="/js/main.js"></script>
 <div class="backdrop"></div>
 <header class="main-header">
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/filter/1' ? 'active' : '' %>" href="/">Home</a>
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
             </li>
             <li class="main-header__item">
                 <a class="<%= path === '/filter/1' ? 'active' : '' %>" href="/category/1">Phones</a>
@@ -21,8 +21,36 @@
         </ul>
     </nav>
     <div style="display: flex; gap: 10px; padding-top: 5px;">
-        <input type="text" id="searchTextId" style="width: 300px; border-radius: 50px; height: 40px; font-size: 19px;"/> 
-        <img style="position: relative;  background-color: bisque; border-radius: 50%; object-fit: contain; width: 40px; height: 40px; cursor: pointer;" src="/images/search_icon.png" alt="" width="40px" onclick="searchProductByName()">
+        <div style="position: relative;">
+            <input type="text" id="searchTextId" oninput="searchText(this);" style="width: 300px; border-radius: 50px; height: 40px; font-size: 19px;"/> 
+            <div id="searchResult">
+                <div id="searchLoading" style="text-align: center;"> <img src="images/loading.webp" alt="loading" style="width: 30px; "></div>                
+                <div id="searchContain">
+                    <!-- <div class="searchContainItem">
+                        <img src="/images/1707277947779-product_2.png" style="width: 100px;"/>
+                        <div>
+                            <p>product title</p>
+                            <p>product : price</p>
+                        </div>
+                    </div>
+                    <div class="searchContainItem">
+                        <img src="/images/1707277947779-product_2.png" style="width: 100px;"/>
+                        <div>
+                            <p>product title</p>
+                            <p>product : price</p>
+                        </div>
+                    </div>
+                    <div class="searchContainItem">
+                        <img src="/images/1707277947779-product_2.png" style="width: 100px;"/>
+                        <div>
+                            <p>product title</p>
+                            <p>product : price</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <img style="position: relative;  background-color: bisque; border-radius: 50%; " src="/images/search_icon.png" alt="" width="40px" onclick="searchProductByName()">
         <a href="/admin/home"><button class="btn">Sign In <br/> <b>Admin</b></button></a>
         <div style="position: relative;">
             <a href="/product/cart">
