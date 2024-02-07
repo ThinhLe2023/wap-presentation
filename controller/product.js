@@ -12,7 +12,8 @@ function getProduct (req, res, next) {
     else if(req.query.id)
         id = req.query.id;
     let model = {id:1, imgarr: imgarr};
-    console.log("getProduct");
+
+    console.log("getProduct",id);
     db.getProductById(id).then(result => {
         //console.log("getProductById res_________", result);
         if(result) {
