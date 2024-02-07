@@ -10,23 +10,29 @@
 
     <style>
         .main{
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
         }
         .login_form{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 200px;
-            flex-wrap: wrap;
-           
+            position: relative;
+            margin: auto;
+            width: 300px;
+            border: 2px solid blue;
+            border-radius: 20px;
+            padding: 20px;
+            background-color:beige;
         }
-        .login_form div {
-            margin-top: 10px;
+        .login_form div{
+            margin-bottom: 10px;
         }
-        .label {
+        .login_form label {
+            display: inline-block;
             width: 100px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .myInput{
+            height: 25px;
+            font-size: 17px;
         }
     </style>
     
@@ -34,28 +40,29 @@
 
 <body>
     <div class="main">
+        <div style="text-align: center;">
+            <h1 style="color: red;" >Welcome to WAP_FINAL PROJECT</h1>
+            <h3>Profesor : <span style="color: red;">Sridevi Malasani</span></h3>
+            <h3>Members : </h3>
+            <h3><span style="color: blue;">617326 - THI HOANG XUAN VO</span> </h3>
+            <h3><span style="color: blue;">617291 - Quoc Thinh Le</span> </h3>
+            <h3><span style="color: blue;">617304 - VAN VIEN NGUYEN</span> </h3>
+        </div>
         <form action="/admin/login" method="post">
             <div class="login_form">
-                <div></div>
                 <div>
-                    <h3><%= error%></h3>
-                </div>
-                <div class="label">
-                    <span>User Name</span>
+                    <h3 style="color: red;"><%= error%></h3>
                 </div>
                 <div>
-                    <input type="text" name="username"/>
-                </div>
-                <div class="label">
-                    <span>Password</span>
+                    <label>User Name</label>
+                    <input class="myInput" type="text" name="username"/>
                 </div>
                 <div>
-                    <input type="password" name="password"/>
+                    <label>Password</label>
+                    <input class="myInput" type="password" name="password"/>
                 </div>
-                <div class="label"></div>
-                <div><input type="checkbox" name="remember"/> <span>Remember</span></div>
-                <div class="label"></div>
-                <div> <button>Login</button> </div>
+                <div><label></label> <input  style="width: 20px; height: 20px;" type="checkbox" name="remember"/> <span style="font-size: 20px; font-weight: bold;">Remember</span></div>
+                <div style="text-align: center;" > <button style="color: white; background-color: black; font-size: 20px; font-weight: bold; padding: 10px; border-radius: 5px;">Login</button> </div>
             </div>
         </form>
     </div>

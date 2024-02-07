@@ -10,10 +10,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-color: honeydew;
+        }
         nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-left{
             display: flex;
             gap: 20px;
             padding-left: 50px;
+        }
+        .nav-left div {
+            padding: 5px;
+        }
+        .header h1{
+            text-align: center;
+            margin: 0px ;
+            padding: 10px 0px 0px 0px;
+        }
+        .header{
+            height: 120px;
+            background-color:beige;
+            margin: 0px 0px 20px 0px;
+            padding: 0px;
+        }
+
+        .header a {
+            display: inline-block;
+            width: 100px;
+            color: blue;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .select{
+            background-color: yellowgreen;
+            padding: 5px;
         }
 
         .admin_home_body{
@@ -34,41 +70,72 @@
             width: 100px;
             object-fit: scale-down;
         }
+
+        .main{
+            width: 50vh;
+            position: relative;
+            margin: auto;            
+        }
+        .main div {
+            margin-bottom: 20px;
+        }
+        .main label {
+            font-size: 17px;
+            font-weight: 600;
+            width: 120px;
+            display: inline-block;
+        }
+        input {
+            height: 25px;
+            font-size: 17px;
+        }
+        select {
+            height: 25px;
+            width: 190px;
+            font-size: 17px;
+            border-radius: 5px;
+        }
     </style>
     
 </head>
 
 <body>
     <%- include('../includes/admin_header.html') %>
-    <form action="/admin/product" method="post" enctype="multipart/form-data">
+    <div class="main">
 
+        <form action="/admin/product" method="post" enctype="multipart/form-data">
+
+            <div>
+                <label>Product title : </label> <input type="text" name="title" />
+            </div>
+            <div>
+                <label>Price :</label> <input type="text" name="price" />
+            </div>
+            <div>
+                <label>Discount :</label> <input type="text" name="discount" />
+            </div>
+            <div>
+                <label>description :</label> 
+                <textarea name="description" rows="10" ></textarea>
+                <!-- <input type="text" name="description" /> -->
+            </div>
+            <div>
+                <label>Category : </label> 
+                <select name="category">
+                    <% for (ele of category) {%>
+                        <option value="<%=ele.id%>"><%=ele.name%></option>
+                    <%}%>
+                </select>
+            </div>
         <div>
-            <label>Product title : </label> <input type="text" name="title" />
+            <label> Images :  </label> <input type="file" name="product_images" multiple />
         </div>
-        <div>
-            <label>Price :</label> <input type="text" name="price" />
-        </div>
-        <div>
-            <label>Discount :</label> <input type="text" name="discount" />
-        </div>
-        <div>
-            <label>description :</label> <input type="text" name="description" />
-        </div>
-        <div>
-            <label>Category : </label> 
-            <select name="category">
-                <% for (ele of category) {%>
-                    <option value="<%=ele.id%>"><%=ele.name%></option>
-                <%}%>
-            </select>
-        </div>
-    <div>
-        <label> Image :  </label> <input type="file" name="product_images" multiple />
+        <div style="text-align: center;">
+            <button style="display: inline-block; width: 200px; background-color: blue; color: white; font-weight: bold; font-size: 25px; border-radius: 5px;">Save</button>
+            </div>
+        </form>
+
     </div>
-    <div>
-        <button>Save</button>
-        </div>
-    </form>
 </body>
 
 </html>

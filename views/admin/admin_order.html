@@ -9,10 +9,45 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-color: honeydew;
+        }
         nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-left{
             display: flex;
             gap: 20px;
             padding-left: 50px;
+        }
+        .nav-left div {
+            padding: 5px;
+        }
+        .header h1{
+            text-align: center;
+            margin: 0px ;
+            padding: 10px 0px 0px 0px;
+        }
+        .header{
+            height: 120px;
+            background-color:beige;
+            margin: 0px 0px 20px 0px;
+            padding: 0px;
+        }
+        .header a {
+            display: inline-block;
+            width: 100px;
+            color: blue;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .select{
+            background-color: yellowgreen;
+            padding: 5px;
         }
 
         .order_body {
@@ -22,8 +57,18 @@
         }
         .order_item {
             display: grid;
-            grid-template-areas: 'contact product action price';
+            grid-template-columns: 2fr 2fr 1fr 1fr;
             gap: 10px;
+            border: 1px solid blue;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .order_item_header{
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 1fr;
+            gap: 10px;
+            font-size: 20px;   
+            font-weight: bold;
         }
         .order_product{
             margin-bottom: 10px;
@@ -42,6 +87,21 @@
         }
         .total-price{
             text-align: right;
+            background-color:antiquewhite;
+            height: 50px;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .truncate-text {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            font-style: italic;
+        }
+        .main{
+            padding: 20px;
         }
     </style>
     
@@ -49,49 +109,59 @@
 
 <body>
     <%- include('../includes/admin_header.html') %>
-    <div class="order_body">
-        <% let totalPrice = 0; %>
-        <% for (order of orders) { let totalPricePerOrder = 0; %>
-            <div class="order_item">
-                <div> <%= order.contactInfo%> </div>
-                <div>
-                    <% for (product of order.products) { totalPricePerOrder += product.price * product.amount %>
-                        <div class="order_product">
-                            <div> <label><%= product.title%></label> </div>
-                            <div>
-                                <% for (image of product.imageUrl) {%>
-                                    <img src="/<%= image%>" style="width: 50px;"/>
+    <div class="main">
+        <div class="order_body">
+            <div class="order_item_header">
+                <div>Contact infomation</div>
+                <div>Products</div>
+                <div>Action</div>
+                <div>Price Per Order</div>
+            </div>
+            <% let totalPrice = 0; %>
+            <% for (order of orders) { let totalPricePerOrder = 0; %>
+                <div class="order_item">
+                    <div class="truncate-text" style="font-size: 20px;"> <%= order.contactInfo%> </div>
+                    <div>
+                        <% for (product of order.products) { totalPricePerOrder += product.price * product.amount %>
+                            <div class="order_product">
+                                <div> <label><%= product.title%></label> </div>
+                                <% if(product.imageUrl && product.imageUrl.length > 0) {%>
+                                    <div>
+                                        <% for (image of product.imageUrl) {%>
+                                            <img src="/<%= image%>" style="width: 50px;"/>
+                                        <%}%>
+                                    </div>
                                 <%}%>
+                                <div><label>Price : </label> <%= product.price%>$ </div>
+                                <div class="truncate-text"><label>Description :</label>  <%= product.description%></div>
+                                <div> <label>Amount :</label>  <%= product.amount%></div>
                             </div>
-                            <div><label>Price : </label> <%= product.price%> </div>
-                            <div><label>Description :</label>  <%= product.description%></div>
-                            <div> <label>Amount :</label>  <%= product.amount%></div>
-                        </div>
-                    <%}%>
+                        <%}%>
+                    </div>
+                    <div> <a style="text-decoration: none; font-size: 20px; color: red; font-weight: bold;" href="/admin/order-delete/<%=order._id%>"> Remove</a> </div>
+                    <div><label>Total : </label> <span class="price"> <%= totalPricePerOrder%>$</span></div>
+                    <% totalPrice += totalPricePerOrder;%>
+                </div>            
+            <%}%>
+            <!-- <div class="order_item">
+                <div>
+                    contact info
                 </div>
-                <div> <a href="/admin/order-delete/<%=order._id%>"> Remove</a> </div>
-                <div><label>Total : </label> <span class="price"> <%= totalPricePerOrder%></span></div>
-                <% totalPrice += totalPricePerOrder;%>
-            </div>            
-        <%}%>
-        <!-- <div class="order_item">
-            <div>
-                contact info
-            </div>
-            <div class="order_product">
-                <div> product title</div>
-                <div>product price </div>
-                <div> product description</div>
-                <div>product image</div>
-            </div>
-            <div>
-                Delete
-            </div>
-            <div>Total : 102034</div>
-        </div> -->
-        <% if(totalPrice > 0) {%>
-            <div class="total-price"> <label> Total Price :</label>  <span class="price"> <%= totalPrice%> </span></div>
-        <%}%>
+                <div class="order_product">
+                    <div> product title</div>
+                    <div>product price </div>
+                    <div> product description</div>
+                    <div>product image</div>
+                </div>
+                <div>
+                    Delete
+                </div>
+                <div>Total : 102034</div>
+            </div> -->
+            <% if(totalPrice > 0) {%>
+                <div class="total-price"> <label> Total Price :</label>  <span class="price"> <%= totalPrice%>$</span></div>
+            <%}%>
+        </div>
     </div>
 </body>
 

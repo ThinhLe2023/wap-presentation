@@ -22,7 +22,7 @@ const fileStorege = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' ) {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' ) {
         cb(null, true);
     } else {
         cb(null, false);
@@ -56,7 +56,7 @@ mongoConnect(() => {
         console.log('Your Server is running on 80');
     });
 
-    // let order = new Order('conntant viennv', [{_id : '65c173e38cfa37f5178c670e', amount: 2}, {_id : '65c17b9d70e14aa86dc3360b', amount: 2}])
+    // let order = new Order('conntant viennv', [{_id : '65c2c24c752f51ba062c79e5', amount: 2}, {_id : '65c2da3025a75604ab2c07f7', amount: 2}])
     // order.save().then(result => {
     //     console.log('save order   ', result);
     // }).catch(e => {

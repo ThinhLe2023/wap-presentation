@@ -11,5 +11,6 @@ router.get('/product', adminController.adminGetProduct)
 router.post('/product', adminController.adminPostProduct);
 router.get('/orders',adminController.getAllOrder);
 router.get('/order-delete/:id',adminController.removeOrder);
+router.get('/logout',adminController.logout);
 
 module.exports = router;

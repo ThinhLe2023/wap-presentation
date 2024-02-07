@@ -62,7 +62,7 @@ exports.auth = (req, res, next) => {
     res.redirect('/admin/login');
 }
 exports.adminGetProduct = (req, res, next) => {
-    res.render('admin/product_create', {category: categoryList});
+    res.render('admin/product_create', {category: categoryList, name: req.session.userName, path: req.path});
 }
 exports.adminGetProductId = (req, res, next) => {
 
@@ -70,13 +70,13 @@ exports.adminGetProductId = (req, res, next) => {
     console.log('load product');
     Product.getProductById(id).then(product => {
         if(product) {
-            res.render('admin/product_update', {category: categoryList, product: product, error:''});
+            res.render('admin/product_update', {category: categoryList, product: product, error:'', name: req.session.userName , path: req.path});
         } else {
-            res.render('admin/product_create', {category: categoryList, error: 'Cannot find product'});
+            res.render('admin/product_create', {category: categoryList, error: 'Cannot find product', name: req.session.userName, path: req.path});
         }
     }).catch(e => {
         console.log('error load product id ' +  id);
-        res.render('admin/product_create', {category: categoryList, error: 'Cannot find product'});
+        res.render('admin/product_create', {category: categoryList, error: 'Cannot find product', name: req.session.userName, path: req.path});
     })
 }
 
@@ -115,7 +115,7 @@ exports.adminPostProduct = (req, res, next) => {
 
 exports.adminHome = (req, res, next) => {
     Product.getAllProduct().then( result => {
-        res.render('admin/admin_home', {list: result});
+        res.render('admin/admin_home', {list: result, name: req.session.userName, path: req.path});
     }).catch(e => {
         console.log(e);
     });
@@ -123,7 +123,7 @@ exports.adminHome = (req, res, next) => {
 
 exports.getAllOrder = (req, res, next) => {
     Order.getAllOrders().then(orders => {
-        res.render('admin/admin_order', {orders: orders});
+        res.render('admin/admin_order', {orders: orders, name: req.session.userName, path: req.path});
     }).catch( e => {
         console.log(e);
     });
@@ -137,4 +137,10 @@ exports.removeOrder = (req, res, next) => {
     }).catch( e => {
         console.log(e);
     });
+}
+
+exports.logout = (req, res, next) => {
+    req.session.destroy();
+    res.clearCookie('logined');
+    res.redirect('/admin/login');
 }

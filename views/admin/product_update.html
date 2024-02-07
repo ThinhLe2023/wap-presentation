@@ -10,9 +10,99 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
+
+body{
+            margin: 0px;
+            padding: 0px;
+            background-color: honeydew;
+        }
+        nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-left{
+            display: flex;
+            gap: 20px;
+            padding-left: 50px;
+        }
+        .nav-left div {
+            padding: 5px;
+        }
+        .header h1{
+            text-align: center;
+            margin: 0px ;
+            padding: 10px 0px 0px 0px;
+        }
+        .header{
+            height: 120px;
+            background-color:beige;
+            margin: 0px 0px 20px 0px;
+            padding: 0px;
+        }
+
+        .header a {
+            display: inline-block;
+            width: 100px;
+            color: blue;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .select{
+            background-color: yellowgreen;
+            padding: 5px;
+        }
+
         .images img{
             width: 100px;
             object-fit: scale-down;
+        }
+
+        .main{
+            width: 50vh;
+            position: relative;
+            margin: auto;
+        }
+        .main div {
+            margin-bottom: 20px;
+        }
+        .main label {
+            font-size: 17px;
+            font-weight: 600;
+            width: 120px;
+            display: inline-block;
+        }
+        .update{
+            display: inline-block;
+            width: 150px; 
+            background-color: blue; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 25px; 
+            border-radius: 5px;
+            padding: 2px;
+        }
+        .delete{
+            text-decoration: none;
+            display: inline-block;
+            width: 150px; 
+            background-color: red; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 25px; 
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 20px;
+        }
+        input {
+            height: 25px;
+            font-size: 17px;
+        }
+        select {
+            height: 25px;
+            width: 190px;
+            font-size: 17px;
+            border-radius: 5px;
         }
     </style>
     
@@ -20,50 +110,56 @@
 
 <body>
     <%- include('../includes/admin_header.html') %>
-    <% if(error != '') {%>
-        <h1><%= error %></h1>
-        <%} else {%>
-            <form action="/admin/product" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="product_id" value="<%= product._id%>"/>
-                    <div>
-                        <label>Product title : </label> <input type="text" name="title" value="<%= product.title%>" />
-                    </div>
-                    <div>
-                        <label>Price :</label> <input type="text" name="price"  value="<%= product.price%>" />
-                    </div>
-                    <div>
-                        <label>Discount :</label> <input type="text" name="discount" value="<%= product.discount%>" />
-                    </div>
-                    <div>
-                        <label>description :</label> <input type="text" name="description" value="<%= product.description%>"/>
-                    </div>
-                    <div class="images">
-                        <% for (ele of product.imageUrl) {%>
-                            <img src="/<%= ele%>" />
-                        <%}%>
-                    </div>
-                    <div>
-                        <label>Category : </label> 
-                        <select name="category">
-                            <% for (ele of category) {%>
-                                <%if (ele.id == product.category) {%>
-                                    <option value="<%=ele.id%>" selected><%=ele.name%></option>
-                                <%} else {%>
-                                    <option value="<%=ele.id%>"><%=ele.name%></option>
-                                <%}%>
+    <div class="main">
+        <% if(error != '') {%>
+            <h1><%= error %></h1>
+            <%} else {%>
+                <form action="/admin/product" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="product_id" value="<%= product._id%>"/>
+                        <div>
+                            <label>Product title : </label> <input type="text" name="title" value="<%= product.title%>" />
+                        </div>
+                        <div>
+                            <label>Price :</label> <input type="text" name="price"  value="<%= product.price%>" />
+                        </div>
+                        <div>
+                            <label>Discount :</label> <input type="text" name="discount" value="<%= product.discount%>" />
+                        </div>
+                        <div>
+                            <label>description :</label> 
+                            <textarea name="description" rows="10" >
+                                <%= product.description%>
+                            </textarea>
+                            <!-- <input type="text" name="description" /> -->
+                        </div>
+                        <div class="images">
+                            <% for (ele of product.imageUrl) {%>
+                                <img src="/<%= ele%>" />
                             <%}%>
-                        </select>
+                        </div>
+                        <div>
+                            <label>Category : </label> 
+                            <select name="category">
+                                <% for (ele of category) {%>
+                                    <%if (ele.id == product.category) {%>
+                                        <option value="<%=ele.id%>" selected><%=ele.name%></option>
+                                    <%} else {%>
+                                        <option value="<%=ele.id%>"><%=ele.name%></option>
+                                    <%}%>
+                                <%}%>
+                            </select>
+                        </div>
+                    <div>
+                        <label> Image :  </label> <input type="file" name="product_images" multiple />
                     </div>
-                <div>
-                    <label> Image :  </label> <input type="file" name="product_images" multiple />
-                </div>
-                <div>
-                    <a href="/admin/product-delete/<%= product._id%>" ><span>Delete</span></a>
-                        <button>Update</button>
-                </div>
-            </form>
-
-        <%}%>
+                    <div style="text-align: center;">
+                        <a class="delete" href="/admin/product-delete/<%= product._id%>" ><span>Delete</span></a>
+                            <button class="update">Update</button>
+                    </div>
+                </form>
+    
+            <%}%>
+    </div>
 </body>
 
 </html>
