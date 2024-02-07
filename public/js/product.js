@@ -6,6 +6,7 @@ function addtocart(id) {
     }).done(function(response) {
         console.log(response);
         $("#subtotal").html('$' + response.subtotal);
+        $("#headingno").html('$' + response.subtotal);  
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $(".cartlength").html(response.noofitem);
@@ -30,6 +31,7 @@ function removeItem(self, id) {
     }).done(function(response){
         console.log(response);
         $("#spannoofitem").html("(" + response.noofitem + " items)");
+        $("#headingno").html('$' + response.subtotal);  
         $("#subtotal").html(response.subtotal);
         $(".cartlength").html(response.noofitem);
     })
@@ -45,6 +47,7 @@ function changeQuantity(self, id, num) {
     }).done(function(response){
         console.log(response);
         $("#spannoofitem").html("(" + response.noofitem + " items)");
+        $("#headingno").html('$' + response.subtotal);  
         $("#subtotal").html(response.subtotal);
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $(".cartlength").html(response.noofitem);
