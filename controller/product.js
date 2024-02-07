@@ -10,7 +10,7 @@ function getProduct (req, res, next) {
     else if(req.query.id)
         id = req.query.id;
     let model = {id:1, imgarr: imgarr};
-    console.log("getProduct");
+    console.log("getProduct",id);
     /*
    db.getAllProduct().then(res=>{
     console.log("getAllProduct================", res);
