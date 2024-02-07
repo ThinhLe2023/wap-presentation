@@ -1,23 +1,13 @@
-function filterProduct(category) {
-  console.log('filterProduct');
-  $('#productContainer').html('');
-  $.ajax({
-    'url': "/filter/" + category,
-    'type': 'GET',
-    'data': {},
-    'success': handleSuccessFn,
-    'error': handleErrorFn
-  });
-}
-
-function refreshProducts() {
-  $.ajax({
-    'url': "/allProducts",
-    'type': 'GET',
-    'data': {},
-    'success': handleSuccessFn,
-    'error': handleErrorFn
-  });
+function refreshProducts(loading) {
+  if(loading.length == 1 && loading[0].id ==='loadingId'){
+    $.ajax({
+      'url': "/allProducts",
+      'type': 'GET',
+      'data': {},
+      'success': handleSuccessFn,
+      'error': handleErrorFn
+    });
+  }
 }
 
 function handleSuccessFn(data) {
