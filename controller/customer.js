@@ -18,8 +18,9 @@ exports.getAllProduct = (req, res, next) => {
 
 exports.productFiler = (req, res, next) => {
     let category = req.params.category;
+    console.log(category);
     Product.getAllProductByCategory(category).then(data => {
-        res.render('index', { path: '/category/' + category, prods: data });
+        res.render('index', {noofitem: req.cookies.cart?req.cookies.cart.length:0, path: '/category/' + category, prods: data });
     });
 }
 
