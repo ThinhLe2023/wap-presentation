@@ -152,7 +152,7 @@ function searchText(input) {
             html += '<div class="searchContainItem">';
             html += '<a href="/product/detail?id=' + obj._id + '"> <img src="' + image + '" style="width: 70px;"/> </a>';
             html += '<div>';
-            html += '<p style="color: blue;">' + obj.title + '</p>';
+            html += '<p class="truncate-text" style="color: blue;">' + obj.title + '</p>';
             html += '<p style="color: red;" >Price : ' + obj.price + ' $</p>';
             html += '</div>';
             html += '</div>';
