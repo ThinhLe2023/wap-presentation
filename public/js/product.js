@@ -10,6 +10,11 @@ function addtocart(id) {
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $(".cartlength").html(response.noofitem);
+        if(parseInt(response.noofitem) > 0) {
+            $(".cartlength").css("display", "");
+        } else {
+            $(".cartlength").css("display", "none");
+        }
 
         $("#inccart").html(response.carthtml);
         $("#cartwnd").css("visibility", "visible");
@@ -25,7 +30,7 @@ function removeItem(self, id) {
     console.log(removeddiv.html());
     removeddiv.remove();
     $.ajax({
-        "url": "product/removeitem",
+        "url": "removeitem",
         "method": "GET",
         "data":{id: id}
     }).done(function(response){
@@ -34,6 +39,15 @@ function removeItem(self, id) {
         $("#headingno").html('$' + response.subtotal);  
         $("#subtotal").html(response.subtotal);
         $(".cartlength").html(response.noofitem);
+        if(parseInt(response.noofitem) > 0) {
+            $(".cartlength").css("display", "");
+            $("#subtotalid").css("display", "");
+            $("#btnorder").css("display", "");
+        } else {
+            $(".cartlength").css("display", "none");
+            $("#subtotalid").css("display", "none");
+            $("#btnorder").css("display", "none");
+        }
     })
     
 }
@@ -47,10 +61,11 @@ function changeQuantity(self, id, num) {
     }).done(function(response){
         console.log(response);
         $("#spannoofitem").html("(" + response.noofitem + " items)");
-        $("#headingno").html('$' + response.subtotal);  
+        $("#headingno").html(response.noofitem);  
         $("#subtotal").html(response.subtotal);
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $(".cartlength").html(response.noofitem);
+        /*
         if(response.action == "remove") {
             let removeddiv = $(self).parent().parent().parent();
             console.log(removeddiv.html());
@@ -58,6 +73,25 @@ function changeQuantity(self, id, num) {
         } else {
             console.log($(self).parent().children('span').html());
             $(self).parent().children('span').html(response.newquantity);
+        }
+        */
+
+        if(parseInt(response.newquantity) <= 0) {
+            let removeddiv = $(self).parent().parent().parent();
+            console.log(removeddiv.html());
+            removeddiv.remove();
+        } else {
+            $(self).parent().children('span').html(response.newquantity);
+        }
+
+        if(parseInt(response.noofitem) > 0) {
+            $(".cartlength").css("display", "");
+            $("#subtotalid").css("display", "");
+            $("#btnorder").css("display", "");            
+        } else {            
+            $(".cartlength").css("display", "none");
+            $("#subtotalid").css("display", "none");
+            $("#btnorder").css("display", "none");
         }
     })       
        

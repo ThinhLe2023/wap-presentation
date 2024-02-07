@@ -33,10 +33,10 @@
                 box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;">
                     <div style="position: sticky; top: 115px;">
                         <!--div with border-->
-                        <div style="height: 30px; width: 72%; position: absolute; top:-25px; right: 30px;" class="box-border"></div>
-                        <div style="height: 38px; width: 80%; position: absolute; top:-20px; right: 40px;" class="box-border"></div>
+                        <div style="height: 30px; width: 72%; position: absolute; top:-25px; right: 30px;" class="box-border" onfocus="this.blur();"></div>
+                        <div style="height: 38px; width: 80%; position: absolute; top:-20px; right: 40px;" class="box-border" onfocus="this.blur();"></div>
                         <% if (noofitem > 0) { %> 
-                        <div style="box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026; border-radius: 0.5rem; margin-top: 40px;">
+                        <div id = "subtotalid" style="box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026; border-radius: 0.5rem; margin-top: 40px;">
                              
                             <div style="display: flex;flex-direction: column;margin: 0 auto; padding-left: 1rem;padding-right: 1rem;">
                                 <!--Subtotal-->

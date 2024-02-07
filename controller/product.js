@@ -59,12 +59,12 @@ function addToCart (req, res, next) {
                             , imgurl: ((val.imageUrl && val.imageUrl.length) ? val.imageUrl[0] : "images/download.png")});
                 //console.log("Sau khi add vo cart", cart);
                 res.cookie('cart', cart);
-                console.log("addToCart cart getPrice", cart);
+                
                 let model = {};
                 model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
                 model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
                 model.cart = cart;
-
+                console.log("addToCart model", model);
                 renderCartHtml(res, model);
                               
             },
