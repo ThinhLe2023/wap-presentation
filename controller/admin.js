@@ -102,7 +102,7 @@ exports.adminPostProduct = (req, res, next) => {
     let category = req.body.category;
     let images = req.body.files;
     if(req.files){
-        images = req.files.map((e) => e.path);        
+        images = req.files.map((e) => '/'+e.path);
     }
     let product = new Product(title, price, discount, description, category, images);
     if(req.body.walmart_id){
