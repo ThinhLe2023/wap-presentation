@@ -189,6 +189,7 @@ function getCart(req, res, next) {
     let model = {};
     //cart.map(ele=>ele.title = (listProduct.find(p=>p._id=ele.id).title));
     //console.log("getcart", cart);
+    model.path = '/addcart';
     model.cart = cart;
     model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
     model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);;

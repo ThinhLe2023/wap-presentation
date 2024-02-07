@@ -28,9 +28,8 @@ function handleSuccessFn(data) {
       html += '<article class="card product-item" style="width: 400px; padding-top: 20px;"><header class="card__header">';
       html += '<h1 class="product__title">' + item.title;
       html += '</h1></header><div class="card__image">';
-      //html += '<img src="' + item.imageUrl[0] + '" alt="A' + item.title + '">';
-      html += '<img src="images/img3.jpeg" alt="A' + item.title + '">';
-      html += '</div> <div class="card__content"> <h2 class="product__price">' + item.price;
+      html += '<img src="' + item.imageUrl[0] + '" alt="A' + item.title + '">';
+      html += '</div> <div class="card__content"> <h2 class="product__price"> $' + item.price;
       html += '</h2><p class="product__description">' + item.description;
       html += '</p> </div> <div class="card__actions">  <button class="btn" onclick="addToCart(\''+ item._id +'\')">Add to Cart</button> </div>';
       html += '</article>';

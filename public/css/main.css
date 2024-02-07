@@ -8,7 +8,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  background-color: rgb(158, 185, 243);
+  background-color: whitesmoke;
 }
 
 main {
@@ -34,8 +34,8 @@ form {
 
 .main-header {
   width: 100%;
-  height: 3.5rem;
-  background-color: #00695c;
+  height: 4rem;
+  background-color: #0071dc;
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
@@ -152,17 +152,6 @@ form {
   border-color: #ffeb3b;
 }
 
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-  display: none;
-}
-
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -172,6 +161,8 @@ form {
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
 .card__header,
