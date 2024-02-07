@@ -13,11 +13,6 @@ function getProduct (req, res, next) {
         id = req.query.id;
     let model = {id:1, imgarr: imgarr};
     console.log("getProduct");
-    /*
-   db.getAllProduct().then(res=>{
-    console.log("getAllProduct================", res);
-   })
-   */
     db.getProductById(id).then(result => {
         //console.log("getProductById res_________", result);
         if(result) {
@@ -30,29 +25,13 @@ function getProduct (req, res, next) {
             let subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
             model.subtotal = subtotal;
             model.cart = cart;
+            model.path = '/product/detail';
             //console.log("model", model);
             res.render("detail", model);
         } else {
             res.send("No data");
         }
     });
-    /*
-    console.log("getProductById", model);
-    model.imgarr = imgarr;
-    //console.log("model=", model);
-    let cart = [];
-    if(!req.cookies.cart) {
-        res.cookie('cart', []);
-    } else {
-        cart = req.cookies.cart;
-    }
-    //console.log("cart", cart);
-    model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
-    let subtotal = cart.reduce((accum, ele) => accum + ele.price*ele.quantity, 0);
-    model.subtotal = subtotal;
-    console.log("model", model);
-    res.render("detail", model);
-    */
 }
 
 function addToCart (req, res, next) {
@@ -210,7 +189,11 @@ function saveOrder(req, res, next) {
         order.save().then(result => {
             console.log('save order : ', result);
             res.cookie("cart", []);
-            res.send({result: "Success"});
+            let model = {};
+            model.cart = cart;
+            model.noofitem = 0;
+            model.subtotal = 0;
+            res.send(model);
         }).catch( e => {
             console.log(e);
         });

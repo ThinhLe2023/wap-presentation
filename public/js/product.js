@@ -8,6 +8,7 @@ function addtocart(id) {
         $("#subtotal").html('$' + response.subtotal);
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $("#spannoofitem").html("(" + response.noofitem + " items)");
+        $(".cartlength").html(response.noofitem);
 
         $("#inccart").html(response.carthtml);
         $("#cartwnd").css("visibility", "visible");
@@ -30,6 +31,7 @@ function removeItem(self, id) {
         console.log(response);
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $("#subtotal").html(response.subtotal);
+        $(".cartlength").html(response.noofitem);
     })
     
 }
@@ -45,6 +47,7 @@ function changeQuantity(self, id, num) {
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $("#subtotal").html(response.subtotal);
         $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
+        $(".cartlength").html(response.noofitem);
         if(response.action == "remove") {
             let removeddiv = $(self).parent().parent().parent();
             console.log(removeddiv.html());
@@ -94,12 +97,18 @@ $(function() {
    });
 
    function saveOrder() {
-    alert("saveOrder");
     $.ajax({
         "url": "/product/saveorder",
         "method": "GET",
         "data":{contact: $("#contactInfoId").val()}
     }).done(function(response) {
+        $('#ordercart').css('display', 'none');
+        $("#ordermsg").html("Thank you for shopping with us");
+        $('#msg').css('display', '');
+        $(".menu-quantity").css("display", "none");
+        $("#btnorder").css("display", "none");
+        $(".cartlength").html(response.noofitem);
+        
         console.log(response);       
     })
    }

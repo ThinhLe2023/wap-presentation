@@ -11,9 +11,15 @@
             <div style="display: flex;flex-wrap: wrap; margin-top: 30px;">
                 
                 <div id="inccart" class="inccart " style="width: 66.6666666667%;">
+                    <div id="msg" class="box-border flexcolumn" style="display: none; padding: 15px;gap:10px;">
+                        <div id="ordermsg" style="font-size: 1.25rem;"></div>
+                        <a class="blue-button" href="/" style="text-decoration: none;">
+                            <span>Continue shopping</span>
+                        </a>
+                    </div>
                     <div id="ordercart" class="box-border flexcolumn" style="display: none; padding: 15px;gap:10px;">
-                        Contact information <br/>
-                        <textarea name="contactInfo" id = "contactInfoId" style="border-radius: 8px;"></textarea>
+                        <div id="contactmsg">Please provide contact information </div>
+                        <textarea name="contactInfo" id = "contactInfoId" style="border-radius: 8px; height: 80px;"></textarea>
                         <a class="blue-button" onclick = "saveOrder();">
                             <span>Submit</span>
                         </a>
@@ -50,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="margin-top: 30px;">
+                        <div id="btnorder" style="margin-top: 30px;">
                             <a class="blue-button" onclick = "$('#ordercart').css('display', '');">
                                 <span>Order</span>
                             </a>

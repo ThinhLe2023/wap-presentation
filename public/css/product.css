@@ -119,3 +119,15 @@ a.x:hover {
     width: 171px; 
     height: 40px;
 }
+
+.menu-quantity {
+    right: 0px; 
+    bottom: -8px; 
+    position: absolute;
+    margin-left: auto;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center; 
+    gap: 15px;
+}
