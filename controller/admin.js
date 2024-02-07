@@ -93,14 +93,18 @@ exports.adminProductDelete = (req, res, next) => {
 }
 
 exports.adminPostProduct = (req, res, next) => {
-    console.log('body === ', req.body);
+    
     let id = req.body.product_id;
     let title = req.body.title
     let price = req.body.price
     let discount = req.body.discount;
     let description = req.body.description;
     let category = req.body.category;
-    let images = req.body.files;
+    let images = [];
+    if(req.body.files){
+        images.push(req.body.files);
+    }
+
     if(req.files){
         images = req.files.map((e) => '/'+e.path);
     }
@@ -112,6 +116,7 @@ exports.adminPostProduct = (req, res, next) => {
         console.log('update========',   id);
         product = new Product(title, price, discount, description, category, images, id);
     }
+
     product.save().then( result => {
         console.log('add product ======= ',result);
         res.redirect('/admin/home');

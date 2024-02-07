@@ -18,13 +18,13 @@
         <div class="grid" id="productContainer">
         <% if (prods.length > 0) { %>
                 <% for (let product of prods) { %>
-                    <article class="card product-item" style="width: 400px; padding-top: 20px;" onclick="forwardToProductDetail({id: '<%= product._id %>'})">
-                        <header class="card__header">
+                    <article class="card product-item" style="width: 400px; padding-top: 20px;">
+                        <!-- <header class="card__header">
                             <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
+                        </header> -->
+                        <div class="card__image" onclick="forwardToProductDetail({id: '<%= product._id %>'})">
                             <% if(!product.imageUrl) {product.imageUrl = ['images/download.png'];} %>
-                            <img src="\<%= product.imageUrl[0] %>" alt="A  <%= product.title %>" style="border-radius: 50%;">
+                            <img src="<%= product.imageUrl[0] %>" alt="A  <%= product.title %>" style="border-radius: 50%;">
                         </div>
                         <div class="card__content">
                             <h2 class="product__price">$<%= product.price %> </h2>
