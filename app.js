@@ -33,15 +33,11 @@ const fileFilter = (req, file, cb) => {
 //EJS Engine
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
-
-app.use('/images',express.static(path.join(__dirname, 'images')));
-
 app.use(cookieParser("usercookies"));
 app.use(session({secret: 'user-session', resave: false, saveUninitialized: false}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(multer({storage: fileStorege, fileFilter: fileFilter}).array('product_images')); //single('product_images'));//
-//app.use(multer().array('product_images'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -71,28 +67,10 @@ mongoConnect(() => {
     // .catch(e => console.log(e));
 });
 
-
-// app.listen(80, () => {
-//     console.log('Your Server is running on 80');
-// })
-
 app.use('/admin',adminRouter);
 app.use('/product', productRouter);
 app.use(customerRouter);
 
-/*
-app.get('/*',(req, res, next) => {
+app.get((req, res, next) => {
     res.render('404');
 });
-=======
-*/
-
-// mongoConnect(() => {
-//     console.log('connected  =====');
-//     app.listen(80, () => {
-//         console.log('Your Server is running on 80');
-//     })
-// });
-
- //console.log(Products.getAllProductByTitle('1'));
-// try to save product 

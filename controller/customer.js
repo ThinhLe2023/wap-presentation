@@ -1,18 +1,33 @@
 const Product = require('../models/product');
 
+
 exports.home = (req, res, next) => {
+    let listProd = [];
+    res.render('index', { path: '/', prods: listProd });
+}
+
+exports.getAllProduct = (req, res, next) => {
     let listProd = [];
     Product.getAllProduct().then(data => {
         listProd = data;
-        console.log(data);
-        res.render('index', { path: '/', prods: listProd });
+        res.cookie('products', data);
+        res.send(data);
     });
 }
 
 exports.productFiler = (req, res, next) => {
     let category = req.params.category;
-    let newProds = Product.getAllProductByCategory(category).then(data => {
-        res.send(newProds);
+    console.log('here is href');
+    Product.getAllProductByCategory(category).then(data => {
+        res.render('index', { path: '/filterCategory/' + category, prods: data });
+    });
+}
+
+exports.getAllProductByTitle = (req, res, next) => {
+    let name = req.params.name;
+    console.log(name);
+    Product.getAllProductByTitle(name).then(data => {
+        res.send(data);
     });
 }
 

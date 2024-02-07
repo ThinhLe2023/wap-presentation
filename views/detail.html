@@ -3,32 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/product.css" /> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/product.js"></script>
     <script>
-        function addtocart(id) {
-            alert(id);
-            $.ajax({
-                "url": "/addcart",
-                "method": "GET",
-                "data":{id: id}
-            }).done(function(response){
-                console.log(response)
-            })
-        }
+  
     </script>
     <title>Document</title>
 </head>
 <body>
     <div>
-        <div style="margin: 0 auto;max-width: 1440px;width: 90%;padding-left: 20px;padding-right: 20px;">
+        <div class="content">
             <div style="display: flex;flex-wrap: wrap;">
-                <div style="width: 66.6666666667%; flex: 0 0 auto; box-sizing: border-box;
-                padding-right: 0.75rem; padding-left: 0.75rem;">
+                <div style="width: 66.6666666667%; flex: 0 0 auto; box-sizing: border-box;padding-right: 0.75rem; padding-left: 0.75rem;">
                     <!--img + detail-->
-                    <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+                    <div class="flexcolumn" style="box-sizing: border-box;">
                         <div style="display: flex; align-items: center;">
-                            <div style="width: 117px;margin: .5rem;position: relative;">
-                                <div style="height: 645px;max-height: 645px;margin-top: 0.5rem;overflow-y: hidden;box-sizing: border-box;">
+                            <div style="width: 117px;margin: .5rem;position: relative; padding-top: 45px;">
+                                <div id = "smallimgs" style="height: 645px;max-height: 645px;margin-top: 0.5rem;overflow-y: hidden;box-sizing: border-box;">
                                     <% for (let img of imgarr) {%>
                                     <div style="text-align: center;margin-bottom: 0.5rem;overflow: hidden;border-width: 0.125rem;border-radius: 0.5rem;border-color: #fff; border-style: solid;
                                         box-sizing: border-box;">
@@ -42,7 +34,7 @@
                                 <div style="width: 100%;display: flex;justify-content: center;align-items: flex-start;box-sizing: border-box;">
                                     <div style="height:613px;visibility:hidden; width: 68px; box-sizing: border-box;"></div>
                                     <div style="height: 640px; box-sizing: border-box;">
-                                        <img src="<%= mainimg %>"
+                                        <img id = "mainimg" src="<%= mainimg %>"
                                             height="640px", width="640px"/>
                                     </div>
                                 </div>
@@ -65,21 +57,69 @@
                     </div>
                 </div>
                 <div style="width: 33.3333333333%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
-                    <div style="font-size: 18px; font-weight: bold;">
-                        <%= desc %>
+                    <div style="font-size: 21px; font-weight: bold; width: 100%;">
+                        <%= title %>
+                    </div>
+                    <div style="font-size: 17px; font-weight: bold; white-space: pre-line;">
+                        <%= description %>
                     </div>
                     <br>
                     <h2>$<%= price %></h2>
                     <a style="padding-left: 0.5rem;padding-right: 0.5rem;font-weight: 700;justify-content: center;align-items: center;display: flex;background: #0071dc;
                         color: #fff;border-radius: 62.5rem;cursor: pointer;box-sizing: border-box; width: 171px; height: 40px;"
-                        onclick="addtocart('<%=id%>');"
+                        onclick="addtocart('<%=_id%>');"
                         >
                         <span>Add to cart</span>
                     </a>
                 </div>
             </div>
         </div>
+
+         <!-- ------cart----- -->
+         <div id = "cartwnd" class="cardwnd">
+         <div style="display: flex;flex-wrap: wrap; flex-direction: column; align-items: center;">
+             <div id = "closecart" style="align-self: flex-end; padding: 10px;" onclick="closeCart();">
+                 <a class="x">X</a>
+             </div>
+             <div id="inccart" class="inccart" style="width: 90%;">
+                 <!-- large box with border radious-->                
+                 <%- include('cartlist.html') %>
+             </div>
+             <div style="width: 90%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
+                 <div style="position: sticky; top: 115px;">
+                     <!--div with border-->
+                     <div style="box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026; border-radius: 0.5rem;">
+                         <div style="display: flex;flex-direction: column;margin: 0 auto; padding-left: 1rem;padding-right: 1rem;">
+                             <!--Subtotal-->
+                             <div style="display: flex; justify-content: space-between;align-items: center; padding-top: 1rem;">
+                                 <span style="font-weight: 700;">
+                                     Subtotal
+                                     <span id="spannoofitem" style="font-weight: 400;margin-left: 0.25rem;">(<%= noofitem %> items)</span>
+                                 </span>
+                                 <div style="width: 50%;display: flex; flex-direction: column;align-items: flex-end; ">
+                                     <div id="subtotal">$<%= subtotal %></div>
+                                 </div>
+                             </div>
+                             <!--Shipping-->
+                             <div style="display: flex; justify-content: space-between;align-items: center;padding-top: 0.25rem;">
+                                 <span>Shipping</span>
+                                 <div>$5</div>
+                             </div>
+                             <!--estimated -->
+                             <div style="display: flex;justify-content: space-between;align-items: center;font-weight: 700;padding-bottom: 1rem;padding-top: 1rem;box-sizing: border-box;;">
+                                 <label>Estimated total</label>
+                                 <div id="estotal" style="font-size: 1.125rem;">$<%= (parseFloat(subtotal)+5) %></div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+             </div>
+         </div>
+        </div>
     </div>
-    <input type="hidden" name="id" value="<%= id %>"/>
+    <input type="hidden" name="id" value="<%= _id %>"/>
+    <input type="hidden" name="mainimg" value="<%= mainimg %>"/>
+    
 </body>
 </html>

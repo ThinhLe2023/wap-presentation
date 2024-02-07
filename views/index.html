@@ -1,23 +1,28 @@
 <%- include('includes/header.html') %>
-    <title>Shop</title>
-    <link rel="stylesheet" href="css/main.css" />
-
 </head>
+<script>
+    window.onload = function(){
+        setTimeout(() => {
+            refreshProducts();
+        }, 500);
+    };
+
+</script>
 
 <body>
     <%- include('includes/banner.html') %>
     <%- include('includes/menu.html') %>
 
     <main>
+        <div class="grid" id="productContainer">
         <% if (prods.length > 0) { %>
-            <div class="grid" id="productContainer">
                 <% for (let product of prods) { %>
                     <article class="card product-item" style="width: 400px; padding-top: 20px;">
                         <header class="card__header">
                             <h1 class="product__title"><%= product.title %></h1>
                         </header>
                         <div class="card__image">
-                            <img src="<%= product.imageUrl[0] %>" alt="A <%= product.title %>">
+                            <img src="<%= product.imageUrl[0] %>" alt="A  <%= product.title %>" style="border-radius: 50%;">
                         </div>
                         <div class="card__content">
                             <h2 class="product__price">$<%= product.price %> </h2>
@@ -28,9 +33,9 @@
                         </div>
                     </article>
                 <% } %>
-            </div>
-        <% } else { %>
-            <h1>No Products Found!</h1>
-        <% } %>
+                <% } else { %>
+                    <img src="images/loading.webp" alt="loading" id="loadingId">
+            <% } %>
+        </div>
     </main>
 <%- include('includes/footer.html') %>
