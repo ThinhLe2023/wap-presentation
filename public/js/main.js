@@ -15,9 +15,9 @@ function handleSuccessFn(data) {
   console.log(data);
   if(Array.isArray(data)){
     for (const item of data) {
-      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;" onclick="forwardToProductDetail({id: `'+item._id+'`})"><header class="card__header">';
+      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;"><header class="card__header">';
       html += '<h1 class="product__title">' + item.title;
-      html += '</h1></header><div class="card__image">';
+      html += '</h1></header><div class="card__image" onclick="forwardToProductDetail({id: `'+item._id+'`})">';
       if(!item.imageUrl) {item.imageUrl = [`images/download.png`];}
       html += '<img src="' + item.imageUrl[0] + '" alt="A' + item.title + '">';
       html += '</div> <div class="card__content"> <h2 class="product__price"> $' + item.price;
@@ -80,19 +80,20 @@ function pullDataFromWalmart(category,url){
       'x-o-platform-version':'us-web-1.114.0-9de3e781c23dceb65ff4fca56388d3906b82cb68-0206',
       'x-o-segment':'oaoh'
     },
-    'success': handleWalmartData,
+    'success': (data) => handleWalmartData(category, data),
     'error': handleErrorFn
   });
 }
 
-function handleWalmartData(walmart){
+function handleWalmartData(categoryId, walmart){
   let rs = walmart.data.search.searchResult.itemStacks[0].itemsV2;
   for (const item of rs) {
-    let images = [];
-    images.push(item.imageInfo.thumbnailUrl);
+    // let images = [];
+    // images.push(item.imageInfo.thumbnailUrl.split('jpeg')[0] + 'jpeg');
+    let desc = item.shortDescription.split('</li>')[0].replace('<li>', '');
     let body = {
-      walmart_id:item.usItemId,  title : item.shortDescription,price : item.priceInfo.currentPrice.price,
-      discount : 5, description: item.name ,category:2, files : images }
+      walmart_id:item.usItemId,  title : desc,price : item.priceInfo.currentPrice.price,
+      discount : 5, description: item.name ,category:categoryId, files : item.imageInfo.thumbnailUrl.split('jpeg')[0] + 'jpeg' }
     console.log(body);
     $.ajax({
       'url': "/admin/product",
