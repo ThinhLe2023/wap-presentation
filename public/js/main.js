@@ -57,12 +57,16 @@ function addToCart(itemId){
   });
 }
 
+let timoutId;
 function searchText(input) {
   let text = $(input).val();
   if(text.length > 0) {
     $("#searchResult").show();
     $("#searchLoading").show();
-    setTimeout(() => {
+    if(timoutId) {
+      clearTimeout(timoutId);
+    }
+    timoutId = setTimeout(() => {
       $.ajax({
         'url': "/getProductByName/" + text,
         'type': 'GET',

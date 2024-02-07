@@ -24,7 +24,6 @@ exports.productFiler = (req, res, next) => {
 
 exports.getAllProductByTitle = (req, res, next) => {
     let name = req.params.name;
-    console.log(name);
     Product.getAllProductByTitle(name).then(data => {
         res.send(data);
     });
