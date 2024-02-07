@@ -8,5 +8,5 @@ router.get("/addcart", productController.addToCart);
 router.get("/removeitem", productController.removeItem);
 router.get("/cart", productController.getCart);
 router.get("/changequantity", productController.changeQuantity);
-
+router.get("/saveorder", productController.saveOrder);
 module.exports = router;

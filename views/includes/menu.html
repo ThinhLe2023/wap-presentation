@@ -52,6 +52,14 @@
         </div>
         <img style="position: relative;  background-color: bisque; border-radius: 50%; " src="/images/search_icon.png" alt="" width="40px" onclick="searchProductByName()">
         <a href="/admin/home"><button class="btn">Sign In <br/> <b>Admin</b></button></a>
-        <a href="/product/cart"><img style="position: relative; background-color: bisque; border-radius: 50%; " src="/images/cart-yellow.jpg" alt="" width="40px"></a>
+        <div style="position: relative;">
+            <a href="/product/cart">
+                <img style="position: relative; background-color: bisque; border-radius: 50%; " src="/images/cart-yellow.jpg" alt="" width="40px">
+            </a>
+            <% if (noofitem > 0) { %>
+                <span class="cartlength"><%= noofitem %></span>
+            <% } %>
+            
+        </div>
     </div>
 </header>

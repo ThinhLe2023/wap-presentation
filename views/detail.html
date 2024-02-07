@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include('includes/header.html') %>	
     <link rel="stylesheet" type="text/css" href="/css/product.css" /> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="/js/product.js"></script>
     <script>
   
     </script>
-    <title>Document</title>
+    <title></title>
 </head>
 <body>
+    <%- include('includes/banner.html') %>
+    <%- include('includes/menu.html') %>	    
     <div>
         <div class="content">
             <div style="display: flex;flex-wrap: wrap;">
@@ -65,10 +63,7 @@
                     </div>
                     <br>
                     <h2>$<%= price %></h2>
-                    <a style="padding-left: 0.5rem;padding-right: 0.5rem;font-weight: 700;justify-content: center;align-items: center;display: flex;background: #0071dc;
-                        color: #fff;border-radius: 62.5rem;cursor: pointer;box-sizing: border-box; width: 171px; height: 40px;"
-                        onclick="addtocart('<%=_id%>');"
-                        >
+                    <a class="blue-button" onclick="addtocart('<%=_id%>');">
                         <span>Add to cart</span>
                     </a>
                 </div>
@@ -121,5 +116,4 @@
     <input type="hidden" name="id" value="<%= _id %>"/>
     <input type="hidden" name="mainimg" value="<%= mainimg %>"/>
     
-</body>
-</html>
+	<%- include('includes/footer.html') %>

@@ -1,7 +1,9 @@
 let imgarr = ["/images/i15.jpeg", "/images/img3.jpeg", "/images/img4.jpeg", "/images/img5.jpeg"]
 const db = require("../models/product.js")
+const Order = require('../models/order');
 var ejs = require("ejs");
 let path = require('path');
+
 function getProduct (req, res, next) {
     //console.log(req.query);
     let id  = '65c258c3cf39e0972174b9c0';
@@ -10,12 +12,8 @@ function getProduct (req, res, next) {
     else if(req.query.id)
         id = req.query.id;
     let model = {id:1, imgarr: imgarr};
+
     console.log("getProduct",id);
-    /*
-   db.getAllProduct().then(res=>{
-    console.log("getAllProduct================", res);
-   })
-   */
     db.getProductById(id).then(result => {
         //console.log("getProductById res_________", result);
         if(result) {
@@ -28,29 +26,13 @@ function getProduct (req, res, next) {
             let subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
             model.subtotal = subtotal;
             model.cart = cart;
+            model.path = '/product/detail';
             //console.log("model", model);
             res.render("detail", model);
         } else {
             res.send("No data");
         }
     });
-    /*
-    console.log("getProductById", model);
-    model.imgarr = imgarr;
-    //console.log("model=", model);
-    let cart = [];
-    if(!req.cookies.cart) {
-        res.cookie('cart', []);
-    } else {
-        cart = req.cookies.cart;
-    }
-    //console.log("cart", cart);
-    model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
-    let subtotal = cart.reduce((accum, ele) => accum + ele.price*ele.quantity, 0);
-    model.subtotal = subtotal;
-    console.log("model", model);
-    res.render("detail", model);
-    */
 }
 
 function addToCart (req, res, next) {
@@ -196,4 +178,26 @@ function getCart(req, res, next) {
     res.render("cart", model);
 }
 
-module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity}
+function saveOrder(req, res, next) {
+    console.log("saveOrder controller", req.query.contact);
+    let cart = getCartFromCookie(req, res);
+    if(req.query.contact && cart.length > 0) {
+        console.log("IN save");
+        let savedCart = cart.map(ele=>({_id:ele.id, amount: ele.price}));
+        console.log("savedCart", savedCart);
+        let order = new Order(req.query.contact, savedCart);
+
+        order.save().then(result => {
+            console.log('save order : ', result);
+            res.cookie("cart", []);
+            let model = {};
+            model.cart = cart;
+            model.noofitem = 0;
+            model.subtotal = 0;
+            res.send(model);
+        }).catch( e => {
+            console.log(e);
+        });
+    }
+}
+module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity, saveOrder}

@@ -93,7 +93,7 @@
     <%- include('../includes/admin_header.html') %>
     <div class="admin_home_body">
         <% for (product of list) { let imageUrl = '/images/download.png'; %>
-            <%if (product.imageUrl.length > 0) {
+            <%if (product.imageUrl && product.imageUrl.length > 0) {
                 imageUrl = product.imageUrl[0];
                 if (imageUrl.indexOf('http') == -1) { imageUrl = '/'+imageUrl }
             }
