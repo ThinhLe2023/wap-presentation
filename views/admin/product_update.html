@@ -133,9 +133,14 @@ body{
                             <!-- <input type="text" name="description" /> -->
                         </div>
                         <div class="images">
-                            <% for (ele of product.imageUrl) {%>
-                                <img src="/<%= ele%>" />
+                            <% if(product.imageUrl && product.imageUrl.length > 0) {%>
+                                <% for (ele of product.imageUrl) {
+                                    let imageUrl = ele;
+                                %>
+                                    <img src="<%= imageUrl%>" />
+                                <%}%>
                             <%}%>
+                            
                         </div>
                         <div>
                             <label>Category : </label> 
