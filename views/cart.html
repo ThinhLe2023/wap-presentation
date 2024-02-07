@@ -12,7 +12,9 @@
                 
                 <div id="inccart" class="inccart " style="width: 66.6666666667%;">
                     <div id="msg" class="box-border flexcolumn" style="display: none; padding: 15px;gap:10px;">
-                        <div id="ordermsg" style="font-size: 1.25rem;"></div>
+                        <div style="font-size: 1.25rem;">
+                            <img src="/images/thankyou.png"/>
+                        </div>
                         <a class="blue-button" href="/" style="text-decoration: none;">
                             <span>Continue shopping</span>
                         </a>
@@ -27,12 +29,15 @@
                     <!-- large box with border radious-->
                     <%- include('cartlist.html') %>
                 </div>
-                <div style="width: 33.3333333333%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box; background-color: #fff;">
+                <div style="width: 33.3333333333%; flex: 0 0 auto; border: 1px solid #e3e4e5; border-radius: 8px; padding: 1rem; box-sizing: border-box; background-color: #fff;
+                box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;">
                     <div style="position: sticky; top: 115px;">
                         <!--div with border-->
                         <div style="height: 30px; width: 72%; position: absolute; top:-25px; right: 30px;" class="box-border"></div>
                         <div style="height: 38px; width: 80%; position: absolute; top:-20px; right: 40px;" class="box-border"></div>
+                        <% if (noofitem > 0) { %> 
                         <div style="box-shadow: 0 0.0625rem 0.125rem 0.0625rem #00000026; border-radius: 0.5rem; margin-top: 40px;">
+                             
                             <div style="display: flex;flex-direction: column;margin: 0 auto; padding-left: 1rem;padding-right: 1rem;">
                                 <!--Subtotal-->
                                 <div style="display: flex; justify-content: space-between;align-items: center; padding-top: 2rem;">
@@ -54,12 +59,15 @@
                                     <label>Estimated total</label>
                                     <div id="estotal" style="font-size: 1.125rem;">$<%= subtotal + 5 %></div>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
+                        <% } %>
                         <div id="btnorder" style="margin-top: 30px;">
+                            <% if (noofitem > 0) { %>                                                      
                             <a class="blue-button" onclick = "$('#ordercart').css('display', '');">
                                 <span>Order</span>
                             </a>
+                            <% } %>
                         </div>
                     </div>
                     

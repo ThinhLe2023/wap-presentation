@@ -110,8 +110,7 @@ function removeItem(req, res, next) {
             res.cookie('cart', cart);
             
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
-            model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
-            
+            model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);           
         }
     }
     res.json(model);     
@@ -192,11 +191,12 @@ function saveOrder(req, res, next) {
         order.save().then(result => {
             console.log('save order : ', result);
             res.cookie("cart", []);
-            
+            res.send(model);
         }).catch( e => {
             console.log(e);
         });
+    } else {
+        res.send(model);
     }
-    res.send(model);
 }
 module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity, saveOrder}
