@@ -2,8 +2,8 @@
                      <!--first div with bg-->
                      <div style="border-color: #f1f1f2;box-sizing: border-box; padding-bottom: 1rem;background-color: #f2f8fd;
                          border-color: #f1f1f2;border-bottom-style: solid; border-bottom-width: 1px;">
-                         <div>
-                             Shipping, arrivesTue, Feb 6–Wed, Feb 28
+                         <div style="padding: 15px; font-weight: 700;">
+                             Shipping
                          </div>
 
                      </div>
@@ -11,7 +11,7 @@
                      <div style="display: flex; flex-direction: column;">
                          <!--number of item-->
                          <div style="padding-left: 1.5rem;padding-right: 1.5rem;margin-top: 1rem;justify-content: space-between;align-items: center; box-sizing: border-box;">
-                             <div style="font-size: 1.125rem;font-weight: 700;"><span><%= noofitem %></span> items</div>
+                             <div style="font-size: 1.125rem;font-weight: 700;"><span id="headingno"><%= noofitem %></span> items</div>
                          </div>                        
                          <section>
                             <% for(let i = 0; i< cart.length; i++) {%>
@@ -19,8 +19,8 @@
                             <div class="flexcolumn" style="box-sizing: border-box; margin: 0.5rem; position: relative;border-top: 1px solid #f1f1f2; background-color: #fff;">
                                 <div style="display: flex;position: relative;padding-top: 0.25rem;">
                                     <div style="margin-top: 0.25rem;margin-bottom: 1rem;;display: flex;box-sizing: border-box;">
-                                        <a>
-                                            <img src="/images/i15.jpeg" height="96px" width="96px"/>
+                                        <a href="/product/detail?id=<%= cart[i].id %>">
+                                            <img src="<%= cart[i].imgurl %>" height="96px" width="96px"/>                                            
                                         </a>
                                     </div>
                                     <div style="display: flex;width: 60%;box-sizing: border-box;color: #2e2f32; padding-top: 10px;">
@@ -54,9 +54,7 @@
                                 
                             </div>
                             <% } %>
-                        </section>                         
-
-                         
+                        </section>                                                 
 
                      </div>
 

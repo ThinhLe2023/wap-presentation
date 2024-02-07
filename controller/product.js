@@ -55,7 +55,8 @@ function addToCart (req, res, next) {
         db.getProductById(id).then(
             //console.log("getProductById res_________", result);
             function(val) { 
-                cart.push({id:id, quantity:1, price:parseFloat(val.price), title: val.title});
+                cart.push({id:id, quantity:1, price:parseFloat(val.price), title: val.title
+                            , imgurl: ((val.imageUrl && val.imageUrl.length) ? val.imageUrl[0] : "images/download.png")});
                 //console.log("Sau khi add vo cart", cart);
                 res.cookie('cart', cart);
                 console.log("addToCart cart getPrice", cart);
@@ -110,8 +111,7 @@ function removeItem(req, res, next) {
             res.cookie('cart', cart);
             
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
-            model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
-            
+            model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);           
         }
     }
     res.json(model);     
@@ -192,11 +192,12 @@ function saveOrder(req, res, next) {
         order.save().then(result => {
             console.log('save order : ', result);
             res.cookie("cart", []);
-            
+            res.send(model);
         }).catch( e => {
             console.log(e);
         });
+    } else {
+        res.send(model);
     }
-    res.send(model);
 }
 module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity, saveOrder}
