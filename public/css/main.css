@@ -285,3 +285,23 @@ form {
     width: 30rem;
   }
 }
+#searchResult{
+  position: absolute; 
+  display: inline-block; 
+  z-index: 999;
+  width: 100%;
+  left: 0px;
+  top: 40px;
+  background-color: white;
+}
+.searchContainItem{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color:#b9c9ff;
+  margin-bottom: 10px;
+
+}
+.searchContainItem p{
+  font-size: 17px;
+  font-weight: 600;
+}
