@@ -93,14 +93,21 @@ exports.adminProductDelete = (req, res, next) => {
 }
 
 exports.adminPostProduct = (req, res, next) => {
+    console.log('body === ', req.body);
     let id = req.body.product_id;
     let title = req.body.title
     let price = req.body.price
     let discount = req.body.discount;
     let description = req.body.description;
     let category = req.body.category;
-    let images = req.files.map((e) => e.path);
+    let images = req.body.files;
+    if(req.files){
+        images = req.files.map((e) => e.path);        
+    }
     let product = new Product(title, price, discount, description, category, images);
+    if(req.body.walmart_id){
+        product.walmart_id = req.body.walmart_id;
+    }
     if (id) {
         console.log('update========',   id);
         product = new Product(title, price, discount, description, category, images, id);
