@@ -198,6 +198,15 @@ form {
   margin: 0 0.25rem;
 }
 
+.product__description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  font-style: italic;
+}
+
 .btn {
   display: inline-block;
   padding: 0.25rem 1rem;
