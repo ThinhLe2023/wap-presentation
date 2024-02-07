@@ -65,6 +65,10 @@ mongoConnect(() => {
     //     }   
     // })
     // .catch(e => console.log(e));
+    // console.log('start searc ========')
+    // Products.getAllProductByTitle('pro').then(pros => {
+    //     console.log('list product by title : ', pros);
+    // })
 });
 
 app.use('/admin',adminRouter);
