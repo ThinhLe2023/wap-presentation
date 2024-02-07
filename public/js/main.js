@@ -18,6 +18,7 @@ function handleSuccessFn(data) {
       html += '<article class="card product-item" style="width: 400px; padding-top: 20px;" onclick="forwardToProductDetail({id: '+item._id+'})"><header class="card__header">';
       html += '<h1 class="product__title">' + item.title;
       html += '</h1></header><div class="card__image">';
+      if(!item.imageUrl) {item.imageUrl = [`images/download.png`];}
       html += '<img src="' + item.imageUrl[0] + '" alt="A' + item.title + '">';
       html += '</div> <div class="card__content"> <h2 class="product__price"> $' + item.price;
       html += '</h2><p class="product__description">' + item.description;
@@ -34,17 +35,17 @@ function handleErrorFn(shr, error, message) {
   alert(message);
 }
 
-// function searchProductByName() {
-//   let text = $('#searchTextId').val();
-//   //console.log(text);
-//   $.ajax({
-//     'url': "/getProductByName/" + text,
-//     'type': 'GET',
-//     'data': {},
-//     'success': handleSuccessFn,
-//     'error': handleErrorFn
-//   });
-// }
+function searchProductByName() {
+  let text = $('#searchTextId').val();
+  //console.log(text);
+  $.ajax({
+    'url': "/getProductByName/" + text,
+    'type': 'GET',
+    'data': {},
+    'success': handleSuccessFn,
+    'error': handleErrorFn
+  });
+}
 
 
 function addToCart(itemId){
@@ -85,14 +86,12 @@ function pullDataFromWalmart(category,url){
 }
 
 function handleWalmartData(walmart){
-  console.log(walmart);
   let rs = walmart.data.search.searchResult.itemStacks[0].itemsV2;
   for (const item of rs) {
-    console.log(item);
     let images = [];
     images.push(item.imageInfo.thumbnailUrl);
     let body = {
-      product_id:item.usItemId,  title : item.shortDescription,price : item.priceInfo.currentPrice.price,
+      walmart_id:item.usItemId,  title : item.shortDescription,price : item.priceInfo.currentPrice.price,
       discount : 5, description: item.name ,category:2, files : images }
     console.log(body);
     $.ajax({
