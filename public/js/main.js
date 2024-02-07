@@ -55,7 +55,11 @@ function addToCart(itemId){
     "data":{id: itemId},
     'success': function(response) {
       $(".cartlength").html(response.noofitem);
-      //alert('Added Successful!!!');
+      if(parseInt(response.noofitem) > 0) {
+          $(".cartlength").css("display", "");
+      } else {
+          $(".cartlength").css("display", "none");
+      }
     },
     'error': function() {alert('Added Failed!!!')}
   });

@@ -57,8 +57,11 @@
                 <img style="position: relative; background-color: bisque; border-radius: 50%; " src="/images/cart-yellow.jpg" alt="" width="40px">
             </a>
             <% if (noofitem > 0) { %>
-                <span class="cartlength"><%= noofitem %></span>
+                <span class="cartlength"><%= noofitem %></span> 
+            <% } else { %>
+                <span class="cartlength" style="display: none;"><%= noofitem %></span> 
             <% } %>
+                          
             
         </div>
     </div>
