@@ -82,7 +82,7 @@ a.x:hover {
 
 .cardwnd {
     z-index: 100000;
-    width: 600px;
+    width: 800px;
     position: fixed;
     top: 0;
     left: 100%;
@@ -92,4 +92,5 @@ a.x:hover {
     border: 1px solid lightgrey; 
     background-color: #f2f8fd; 
     opacity: 0;
+    visibility: hidden;
 }
