@@ -17,7 +17,7 @@ function getProduct (req, res, next) {
    })
    */
     db.getProductById(id).then(result => {
-        console.log("getProductById res_________", result);
+        //console.log("getProductById res_________", result);
         if(result) {
             //console.log("getProductById result_________", result);
             model = result;
@@ -54,7 +54,7 @@ function getProduct (req, res, next) {
 }
 
 function addToCart (req, res, next) {
-    //console.log("ajax", req.query);
+    console.log("ajax", req.query);
     let cart = getCartFromCookie(req, res);
     let id = req.query.id;
 
