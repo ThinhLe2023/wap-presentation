@@ -19,8 +19,8 @@ function getProduct (req, res, next) {
         if(result) {
             //console.log("getProductById result_________", result);
             model = result;
-            model.mainimg = "/" + result.imageUrl[0]; //result.imageUrl;
-            model.imgarr = result.imageUrl.map(ele=>"/" + ele);
+            model.mainimg = "/" + ((result.imageUrl&&result.imageUrl.length)?result.imageUrl[0]:"images/download.png"); //result.imageUrl;
+            model.imgarr = result.imageUrl ? result.imageUrl.map(ele=>"/" + ele) : [];
             let cart = getCartFromCookie(req, res);
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
             let subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
@@ -95,6 +95,7 @@ function removeItem(req, res, next) {
     //console.log("ajax", req.query);
     let cart = [];
     let id = parseInt(req.query.id);
+    let model = {noofitem: 0, subtotal: 0};
     if(req.cookies.cart) {
         cart = req.cookies.cart;  
         //console.log(req.cookies.cart);
@@ -107,38 +108,38 @@ function removeItem(req, res, next) {
         if(i != cart.length) {
             cart.splice(i, 1);
             res.cookie('cart', cart);
-            let model = {};
+            
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
             model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);
-            res.json(model);
+            
         }
-    }     
+    }
+    res.json(model);     
 }
 
 function changeQuantity(req, res, next) {
     let cart = [];
     let id = req.query.id;
+    let model = {noofitem: 0, subtotal: 0};
     if(req.cookies.cart) {
         cart = req.cookies.cart;
         let idx = findIndexOfProductId(cart, id);
         if (idx > -1) {
-            let item = cart[i];
-            let model = {};
+            let item = cart[i];            
             item.quantity = item.quantity + parseInt(req.query.num);
             if(item.quantity > 0) {
                 model.action = "change";
             } else {
                 model.action = "remove";
-                cart.splice(idx, 1);
-            
+                cart.splice(idx, 1);           
             }
             model.newquantity = item.quantity;
             model.noofitem = cart.reduce((accum, ele) => accum + ele.quantity, 0);
             model.subtotal = cart.reduce((accum, ele) => accum + parseFloat(ele.price)*ele.quantity, 0);;
-            res.cookie('cart', cart);
-            res.json(model);
+            res.cookie('cart', cart);           
         }
     }
+    res.json(model);
 }
 
 function getCartFromCookie(req, res) {
@@ -181,6 +182,7 @@ function getCart(req, res, next) {
 function saveOrder(req, res, next) {
     console.log("saveOrder controller", req.query.contact);
     let cart = getCartFromCookie(req, res);
+    let model = {noofitem: 0, subtotal: 0, cart: cart};
     if(req.query.contact && cart.length > 0) {
         console.log("IN save");
         let savedCart = cart.map(ele=>({_id:ele.id, amount: ele.price}));
@@ -190,14 +192,11 @@ function saveOrder(req, res, next) {
         order.save().then(result => {
             console.log('save order : ', result);
             res.cookie("cart", []);
-            let model = {};
-            model.cart = cart;
-            model.noofitem = 0;
-            model.subtotal = 0;
-            res.send(model);
+            
         }).catch( e => {
             console.log(e);
         });
     }
+    res.send(model);
 }
 module.exports = {getProduct, addToCart, removeItem, getCart, changeQuantity, saveOrder}
