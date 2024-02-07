@@ -126,7 +126,7 @@ form {
 .mobile-nav__item a:hover,
 .mobile-nav__item a.active,
 .mobile-nav__item button:hover,
-.mobile-nav__item button:active {
+.mobile-nav__item button:not(.btn-quanity):active {
   background: #00695c;
   color: white;
   border-radius: 3px;
@@ -272,6 +272,16 @@ form {
   color: white;
 }
 
+.cartlength {
+  position: absolute; 
+  left: 70%; 
+  bottom: 60%; 
+  padding: 0px 4px; 
+  background: red; 
+  border-radius: 50%; 
+  color: white;
+  font-size: 0.8rem;
+}
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
