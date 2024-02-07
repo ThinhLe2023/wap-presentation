@@ -128,7 +128,6 @@ function forwardToProductDetail(itemId) {
 }
 
 
-let timoutId;
 function searchText(input) {
   let text = $(input).val();
   if (text.length > 0) {
