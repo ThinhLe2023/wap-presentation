@@ -53,7 +53,10 @@ function addToCart(itemId){
     'url': "/product/addcart",
     'type': 'GET',
     "data":{id: itemId},
-    'success': function() {alert('Added Successful!!!')},
+    'success': function(response) {
+      $(".cartlength").html(response.noofitem);
+      //alert('Added Successful!!!');
+    },
     'error': function() {alert('Added Failed!!!')}
   });
 }
