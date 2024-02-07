@@ -17,7 +17,6 @@ exports.getAllProduct = (req, res, next) => {
 
 exports.productFiler = (req, res, next) => {
     let category = req.params.category;
-    console.log('here is href');
     Product.getAllProductByCategory(category).then(data => {
         res.render('index', { path: '/filterCategory/' + category, prods: data });
     });
