@@ -15,9 +15,9 @@ function handleSuccessFn(data) {
   console.log(data);
   if(Array.isArray(data)){
     for (const item of data) {
-      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;"><header class="card__header">';
-      html += '<h1 class="product__title">' + item.title;
-      html += '</h1></header><div class="card__image" onclick="forwardToProductDetail({id: `'+item._id+'`})">';
+      html += '<article class="card product-item" style="width: 400px; padding-top: 20px;">';
+      //html += '<header class="card__header"><h1 class="product__title">' + item.title + '</h1></header>';
+      html += '<div class="card__image" onclick="forwardToProductDetail({id: `'+item._id+'`})">';
       if(!item.imageUrl) {item.imageUrl = [`images/download.png`];}
       html += '<img src="' + item.imageUrl[0] + '" alt="A' + item.title + '">';
       html += '</div> <div class="card__content"> <h2 class="product__price"> $' + item.price;
