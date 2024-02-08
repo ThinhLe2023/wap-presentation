@@ -95,17 +95,19 @@ function renderCartHtml(res, model) {
 function removeItem(req, res, next) {
     //console.log("ajax", req.query);
     let cart = [];
-    let id = parseInt(req.query.id);
+    let id = req.query.id;
     let model = {noofitem: 0, subtotal: 0};
+    console.log("removeItem id", id);
     if(req.cookies.cart) {
         cart = req.cookies.cart;  
-        //console.log(req.cookies.cart);
+        
         let i = 0;
         for (i = 0; i < cart.length; i++) {
             if(cart[i].id == id) {
                 break;
             }
         }
+        console.log("removeItem index", i);
         if(i != cart.length) {
             cart.splice(i, 1);
             res.cookie('cart', cart);

@@ -27,7 +27,7 @@ function addtocart(id) {
 function removeItem(self, id) {
     //alert(id);
     let removeddiv = $(self).parent().parent().parent();
-    console.log(removeddiv.html());
+    //console.log(removeddiv.html());
     removeddiv.remove();
     $.ajax({
         "url": "removeitem",
@@ -38,15 +38,18 @@ function removeItem(self, id) {
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $("#headingno").html('$' + response.subtotal);  
         $("#subtotal").html(response.subtotal);
+        $("#estotal").html('$' + (parseFloat(response.subtotal)+5));
         $(".cartlength").html(response.noofitem);
         if(parseInt(response.noofitem) > 0) {
             $(".cartlength").css("display", "");
             $("#subtotalid").css("display", "");
+            $(".box-subtotal").css("display", ""); 
             $("#btnorder").css("display", "");
         } else {
             $(".cartlength").css("display", "none");
             $("#subtotalid").css("display", "none");
             $("#btnorder").css("display", "none");
+            $(".box-subtotal").css("display", "none"); 
         }
     })
     
@@ -59,7 +62,7 @@ function changeQuantity(self, id, num) {
         "method": "GET",
         "data":{id: id, num: num}
     }).done(function(response){
-        console.log(response);
+        //console.log(response);
         $("#spannoofitem").html("(" + response.noofitem + " items)");
         $("#headingno").html(response.noofitem);  
         $("#subtotal").html(response.subtotal);
@@ -78,7 +81,7 @@ function changeQuantity(self, id, num) {
 
         if(parseInt(response.newquantity) <= 0) {
             let removeddiv = $(self).parent().parent().parent();
-            console.log(removeddiv.html());
+            //console.log(removeddiv.html());
             removeddiv.remove();
         } else {
             $(self).parent().children('span').html(response.newquantity);
@@ -87,11 +90,13 @@ function changeQuantity(self, id, num) {
         if(parseInt(response.noofitem) > 0) {
             $(".cartlength").css("display", "");
             $("#subtotalid").css("display", "");
-            $("#btnorder").css("display", "");            
+            $("#btnorder").css("display", "");     
+            $(".box-subtotal").css("display", "");                  
         } else {            
             $(".cartlength").css("display", "none");
             $("#subtotalid").css("display", "none");
             $("#btnorder").css("display", "none");
+            $(".box-subtotal").css("display", "none");           
         }
     })       
        
