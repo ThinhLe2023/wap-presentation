@@ -42,11 +42,14 @@ form {
 }
 
 .main-header__nav {
+  
   height: 100%;
   width: 100%;
   display: none;
   align-items: center;
   justify-content: space-between;
+
+  text-align:center;margin-top:0em;
 }
 
 .main-header__item-list {
@@ -54,6 +57,11 @@ form {
   margin: 0;
   padding: 0;
   display: flex;
+  display:inline-block; 
+  margin:0; 
+  padding:0; 
+  list-style:none; 
+  transform:skew(-25deg);
 }
 
 /*
@@ -363,4 +371,17 @@ form {
   -webkit-line-clamp: 3;
   text-overflow: ellipsis;
   font-style: italic;
+}
+
+@media only screen and (max-width:700px) {
+  .main-header {
+    display: flex;    
+    flex-direction: column;
+    height: 12rem;;
+  }
+
+  .main-header__nav {
+    display: flex;
+  }
+  
 }
