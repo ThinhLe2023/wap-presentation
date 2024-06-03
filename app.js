@@ -7,6 +7,8 @@ const adminRouter = require('./router/adminRouter')
 const customerRouter = require('./router/route');
 const productRouter = require('./router/productRouter.js');
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
 
 var ejs = require("ejs");
 var cookieParser = require('cookie-parser');
@@ -48,8 +50,9 @@ const Order = require('./models/order');
 
 mongoConnect(() => {
     console.log('connected  =====');
-    app.listen(80, () => {
-        console.log('Your Server is running on 80');
+    const port = process.env.PORT || 8080;
+    app.listen(port, () => {
+        console.log(`Your Server is running on ${port}`);
     });
 
     // Products.getAllProduct().then(res => {
